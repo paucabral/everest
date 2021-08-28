@@ -6,7 +6,7 @@ EVEREST | Create a New Event
 {% endblock %}
 
 {% block content %}
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -104,11 +104,11 @@ input:checked + .slider:before {
 
     <div class="form-group row" style="margin-left: 2em;">
       <div class="form-group row">
-        <div class="col-md-10" style="margin-top:0.5rem; margin-bottom:0.5rem;">
+        <div class="col-md-11" style="margin-top:0.5rem; margin-bottom:0.5rem;">
           <label for="id_event_name">Event Name</label>
           {{ form.event_name }}
         </div>
-        <div class="col-md-2" style="margin-top:0.5rem; margin-bottom:0.5rem;">
+        <div class="col-md-1 text-center align-items-center" style="margin-top:0.5rem; margin-bottom:0.5rem;">
           <label for="id_is_attendance_open">Attendance</label>
           <br>
 
@@ -128,7 +128,7 @@ input:checked + .slider:before {
       </div>
       
       <div class="form-group row">
-        <div class="col" style="margin-top:0.5rem; margin-bottom:0.5rem;">
+        <div class="col text-center" style="margin-top:0.5rem; margin-bottom:0.5rem;">
           <label for="id_detailed_description">Detailed Description</label>
           <br>
           {{ form.detailed_description }}
@@ -136,52 +136,51 @@ input:checked + .slider:before {
       </div>
       
 
-      <div class="form-group row">
-        <div class="col-md-4" style="margin-top:0.5rem; margin-bottom:0.5rem;" style="align-items: center;">
-          <label for="id_event_type">Event Type</label>
-          {{ form.event_type }}
-        </div>
-        <div class="col-md-4 django-ckeditor-widget" style="margin-top:0.5rem; margin-bottom:0.5rem;">
-          <label for="id_date">Date and Time</label>
-          
-          {{ form.date }}
-          
-          
+      <div class="form-group row text-center">
 
+        <div class="form-group row">
+          <div class="col-md-6" style="margin-top:0.5rem; margin-bottom:0.5rem;" style="align-items: center;">
+            <label for="id_event_type">Event Type</label>
+            {{ form.event_type }}
+          </div>
+          <div class="col-md-6" style="margin-top:0.5rem; margin-bottom:0.5rem;">
+            <label for="id_date">Date and Time</label>
+            {{ form.date }}
+          </div>
         </div>
-      </div>
-      
-      <div class="form-group row">
-        <div class="col-md-4" style="margin-top:0.5rem; margin-bottom:0.5rem;">
-          <label for="id_cost">Price Type</label>
-          {{ form.cost }}
-        </div>
-
-        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         
-        <style>
-          #hideValuesOnSelect {
-            display: block;
-          }
-        </style>
-
-        <div class="col-md-4" id="hideValuesOnSelect" style="margin-top:0.5rem; margin-bottom:0.5rem;">
-          <label for="id_price">Price</label>
-          {{ form.price }}
+        <div class="form-group row">
+          <div class="col-md-6" style="margin-top:0.5rem; margin-bottom:0.5rem;">
+            <label for="id_cost">Price Type</label>
+            {{ form.cost }}
+          </div>
+        
+          <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+          <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        
+          <style>
+            #hideValuesOnSelect {
+              display: block;
+            }
+          </style>
+        
+          <div class="col-md-6" id="hideValuesOnSelect" style="margin-top:0.5rem; margin-bottom:0.5rem;">
+            <label for="id_price">Price</label>
+            {{ form.price }}
+          </div>
+        
+          <script>
+            function displayDivDemo(elementValue) {
+              if (elementValue.value == 'FREE') {
+                document.getElementById('hideValuesOnSelect').style.display = 'none';
+                document.getElementById('id_price').value = 0;
+              }
+              else {
+                document.getElementById('hideValuesOnSelect').style.display = 'block';
+              }
+            }
+          </script>
         </div>
-
-        <script>
-          function displayDivDemo(elementValue) {
-            if (elementValue.value == 'FREE') {
-              document.getElementById('hideValuesOnSelect').style.display = 'none';
-              document.getElementById('id_price').value = 0;
-            }
-            else {
-              document.getElementById('hideValuesOnSelect').style.display = 'block';
-            }
-          }
-        </script>
       </div>
 
       <div class="form-group row my-3">
