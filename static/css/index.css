@@ -7,6 +7,31 @@ body {
   font-weight: 1000;
 }
 
+.navigationHeader {
+  font-weight: 500;
+}
+
+.navBrand {
+  font-size: 1.5rem;
+}
+
+.menuItem {
+  font-size: 1rem;
+  color: rgb(198, 223, 226) !important;
+}
+
+.menuItem:hover {
+  color: white !important;
+}
+
+.tweet-profile-img {
+  width: 2.5rem;
+  height: 2.5rem;
+  object-fit: cover;
+  border-radius: 50%;
+  align-self: center;
+}
+
 :root {
   --input-padding-x: 1.5rem;
   --input-padding-y: 0.75rem;

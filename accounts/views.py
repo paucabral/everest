@@ -29,8 +29,13 @@ class Register(View):
 
             profile = Profile(user=user)
             profile.save()
-        #   return redirect('/registration-success/')
-            return redirect('/')
+            return redirect('/registration-success/')
+
         else:
             messages.error(request, 'There was an error.')
         return render(request, template_name='accounts/register.html', context={'form': form})
+
+
+class RegistrationSuccess(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, template_name='accounts/registration-success.html', context={})
