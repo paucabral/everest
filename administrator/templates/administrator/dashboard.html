@@ -7,6 +7,30 @@ EVEREST | ADMIN: {{ request.user.username }}
 
 {% block content %}
 
+<main class="">
+  <div class="messages">
+    {% for message in messages %}
+      {% if form.errors %}
+        {% for field in form %}
+          {% for error in field.errors %}
+            <div class="alert alert-danger" style="margin-left: 2em">
+              <strong>{{ error|escape }}</strong>
+            </div>
+          {% endfor %}
+        {% endfor %}
+      {% endif %}
+      {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+        <p class="alert alert-danger alert-link" style="margin-left: 2em">
+          {{ message }}
+        </p>
+      {% else %}
+        <p class="alert alert-success alert-link" style="margin-left: 2em">
+          {{message}}
+        </p>
+      {% endif %}
+    {% endfor %}
+  </div>
+</main>
 
 
 {% endblock %}

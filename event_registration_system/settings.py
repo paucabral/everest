@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bootstrap_datepicker_plus',
+    'ckeditor',
     'accounts',
     'administrator',
     'member',
@@ -135,6 +137,15 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# CKEditor config
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': None,  # You can change this based on your requirements.
+        'width': 'auto',
+
+    },
+}
 
 # Media
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
