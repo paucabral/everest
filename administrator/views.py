@@ -12,6 +12,12 @@ class AdministratorDashboard(View):
     def get(self, request, *args, **kwargs):
         return render(request, template_name='administrator/dashboard.html', context={})
 
+
+class CreateEvent(View):
+    @method_decorator(login_required(login_url='/'))
+    def get(self, request, *args, **kwargs):
+        return render(request, template_name='administrator/event-form.html', context={})
+
     @method_decorator(login_required(login_url='/'))
     def post(self, request, *args, **kwargs):
         pass

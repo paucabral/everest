@@ -106,17 +106,29 @@
       #sidebar-wrapper {
         z-index: 1;
         position: fixed;
-        width: 100%;
+        width: 0%;
         height: 100%;
         overflow-y: hidden;
         background: #2C3E50;
         opacity: 0.9;
         transition: all 0.3s;
       }
+
+      #wrapper.menuDisplayed #sidebar-wrapper {
+        width: 100%;
+        
+      }
+
       #wrapper.menuDisplayed #sidebar-wrapper ul, #wrapper.menuDisplayed #sidebar-wrapper ul li, #wrapper.menuDisplayed #sidebar-wrapper h3, #wrapper.menuDisplayed #sidebar-wrapper img {
+        opacity: 1;
+        transition: all 0.1s;
+        /* text-align: center; */
+      }
+
+      #sidebar-wrapper ul, #sidebar-wrapper ul li, #sidebar-wrapper h3, #sidebar-wrapper img {
         opacity: 0;
         transition: all 0.1s;
-        text-align: center;
+        /* text-align: center; */
       }
     }
   </style>
@@ -176,7 +188,7 @@
         <li class="nav-item dropdown">
           <a href="#" class="dropdown-btn" href="#" id="navigation-dropdown"><i class="fas fa-calendar-plus"></i>&nbsp; Events &nbsp; &nbsp;&nbsp;<i class="fa fa-caret-down"></i></a>
           <div class="dropdown-container">
-            <a style="padding-left: 20px;" href="#"><i class="fas fa-edit"></i> Create a New Event</a>
+            <a style="padding-left: 20px;" href="/administrator/events/create-new"><i class="fas fa-edit"></i> Create a New Event</a>
             <a style="padding-left: 20px;" href="#"><i class="fa fa-list" aria-hidden="true"></i> &nbsp;List All Events</a>
           </div>
         </li>
