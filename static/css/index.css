@@ -24,9 +24,9 @@ body {
   color: white !important;
 }
 
-.tweet-profile-img {
-  width: 2.5rem;
-  height: 2.5rem;
+.profile-img {
+  width: 5rem;
+  height: 5rem;
   object-fit: cover;
   border-radius: 50%;
   align-self: center;

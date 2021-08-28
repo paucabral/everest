@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 class AdministratorDashboard(View):
     @method_decorator(login_required(login_url='/'))
     def get(self, request, *args, **kwargs):
-        return HttpResponse('Administrator Dashboard')
+        return render(request, template_name='administrator/dashboard.html', context={})
 
     @method_decorator(login_required(login_url='/'))
     def post(self, request, *args, **kwargs):

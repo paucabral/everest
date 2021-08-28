@@ -26,7 +26,7 @@ class Login(View):
         if user is not None:
             login(request, user)
             if user.is_superuser:
-                return redirect('/admin')
+                return redirect('/administrator/dashboard')
             else:
                 return redirect('/member/dashboard')
         else:
