@@ -175,10 +175,10 @@ input:checked + .slider:before {
           function displayDivDemo(elementValue) {
             if (elementValue.value == 'FREE') {
               document.getElementById('hideValuesOnSelect').style.display = 'none';
+              document.getElementById('id_price').value = 0;
             }
             else {
               document.getElementById('hideValuesOnSelect').style.display = 'block';
-              document.getElementById('id_price').value = 0;
             }
           }
         </script>
