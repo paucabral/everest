@@ -43,7 +43,11 @@ EVEREST | Login
                 <b class="text-center">{{ message }}</b>
               </div>
               {% endfor %}
-          
+
+              <p class="text-center">
+                <a href="{% url 'reset_password' %}" style="text-decoration: none;">Forgot your password?</a>
+              </p>
+              
               <p class="text-center">
                 Don't have an account yet?
                 <a href="{% url 'register' %}" style="text-decoration: none;">Sign Up</a>
