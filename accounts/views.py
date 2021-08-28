@@ -22,7 +22,7 @@ class Login(View):
             if user.is_superuser:
                 return redirect('/admin')
             else:
-                return redirect('/')
+                return redirect('/member/dashboard')
         else:
             messages.info(request, 'Username or Password is incorrect.')
         return render(request, template_name='accounts/login.html', context={})
