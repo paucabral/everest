@@ -5,14 +5,20 @@ from .forms import CreateUserForm
 from .models import *
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from .decorators import *
 
 # Create your views here.
 
 
 class Login(View):
+    @method_decorator(unauthenticated_user)
     def get(self, request, *args, **kwargs):
         return render(request, template_name='accounts/login.html', context={})
 
+    @method_decorator(unauthenticated_user)
     def post(self, request, *args, **kwargs):
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -28,11 +34,19 @@ class Login(View):
         return render(request, template_name='accounts/login.html', context={})
 
 
+@login_required(login_url='/')
+def logoutUser(request):
+    logout(request)
+    return redirect('/')
+
+
 class Register(View):
+    @method_decorator(unauthenticated_user)
     def get(self, request, *args, **kwargs):
         form = CreateUserForm()
         return render(request, template_name='accounts/register.html', context={'form': form})
 
+    @method_decorator(unauthenticated_user)
     def post(self, request, *args, **kwargs):
         form = CreateUserForm(request.POST)
 
@@ -49,5 +63,6 @@ class Register(View):
 
 
 class RegistrationSuccess(View):
+    @method_decorator(unauthenticated_user)
     def get(self, request, *args, **kwargs):
         return render(request, template_name='accounts/registration-success.html', context={})
