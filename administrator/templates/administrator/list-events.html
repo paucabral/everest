@@ -70,7 +70,7 @@ EVEREST | List of Events
               style="color:white;">Update</span></a>
         </td>
         <td>
-          <form onsubmit="return confirm('Are you sure you want to delete the event: {{ event.id }} - {{ event.event_name }}?');" method="POST" action="{% url 'delete-event' event.id  %}">{% csrf_token %}
+          <form onsubmit="return confirm('WARNING: Deleting an item is irreversible. Are you sure you want to delete the event: {{ event.id }} - {{ event.event_name }}?');" method="POST" action="{% url 'delete-event' event.id  %}">{% csrf_token %}
             <button type="submit" class="btn btn-interact btn-danger">Delete</button><input type="hidden" name="q_id"
               value="{{i.id}}" />
           </form>
