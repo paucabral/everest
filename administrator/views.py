@@ -59,7 +59,7 @@ class UpdateEvent(View):
 
             messages.add_message(request,
                                  messages.SUCCESS,
-                                 'The event was added successfully.')
+                                 'The event was updated successfully.')
             return redirect('/administrator/events/list')
         else:
             messages.error(

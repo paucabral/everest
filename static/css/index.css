@@ -256,6 +256,34 @@ body {
   color: white !important;
 }
 
+.card-item-event {
+  border-radius: 1rem !important;
+}
+
+.card-body {
+  border-bottom-left-radius: 1rem !important;
+  border-bottom-right-radius: 1rem !important;
+}
+
+.card-header-conference {
+  background-color: #2980b9 !important;
+}
+
+.card-header-seminar {
+  background-color: #c0392b !important;
+}
+
+.card-header-workshop {
+  background-color: #8e44ad !important;
+}
+
+.btn-details {
+  background-color: black !important;
+  color: white !important;
+  font-weight: bold !important;
+  border-radius: 20px !important;
+}
+
 /* Fallback for Edge
             -------------------------------------------------- */
 

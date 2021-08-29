@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap_datepicker_plus',
     'ckeditor',
+    'django_filters',
     'accounts',
     'administrator',
     'member',
