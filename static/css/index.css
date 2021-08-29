@@ -202,13 +202,18 @@ body {
 .paginate_button {
   background: none !important;
   border: none !important;
-  color: white !important;
+  color: rgb(168, 247, 250) !important;
   font-weight: bold !important;
   border-radius: 20em !important;
   font-size: 0.7em;
   margin-left: 1em;
   margin-right: 1em;
   text-transform: uppercase !important;
+}
+
+.paginate_button:hover {
+  color: white !important;
+  background-color: black !important;
 }
 
 .dataTables_scrollBody tr:nth-child(even) {

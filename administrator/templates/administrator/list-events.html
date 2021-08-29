@@ -17,10 +17,13 @@ EVEREST | List of Events
     <table id="qlist" style="width: 100%;">
       <thead>
         <th>
-          Event ID
+          ID
         </th>
         <th>
-          Event Tite
+          Event Title
+        </th>
+        <th>
+          Date
         </th>
         <th>
           Description
@@ -34,12 +37,13 @@ EVEREST | List of Events
       <tr>
         <td>{{ event.id }}</td>
         <td>{{ event.event_name }}</td>
+        <td>{{ event.date }}</td>
         <td>{{ event.short_description }}</td>
         <td>
           <a class="btn btn-interact btn-primary" href="/administrator/list-questions/{{i.id}}/">Attendees</a>
         </td>
         <td>
-          <a class="btn btn-interact btn-warning" href="/administrator/update-quiz/{{i.id}}/"><span
+          <a class="btn btn-interact btn-warning" href="/administrator/events/update/{{event.id}}/"><span
               style="color:white;">Update</span></a>
         </td>
         <td>

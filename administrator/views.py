@@ -25,16 +25,43 @@ class CreateEvent(View):
     @method_decorator(login_required(login_url='/'))
     def post(self, request, *args, **kwargs):
         form = EventForm(request.POST)
-        print(form)
         if form.is_valid():
             form.save()
 
             messages.add_message(request,
                                  messages.SUCCESS,
                                  'The event was added successfully.')
-            return redirect('/')
+            return redirect('/administrator/events/list')
         else:
             messages.error(request, 'The event was not added due to an error.')
+            return render(request, template_name='administrator/event-form.html', context={'form': form})
+
+
+class UpdateEvent(View):
+    @method_decorator(login_required(login_url='/'))
+    def get(self, request, *args, **kwargs):
+        event_id = self.kwargs['event_id']
+        event = Event.objects.get(pk=event_id)
+
+        form = EventForm(instance=event)
+        return render(request, template_name='administrator/event-form.html', context={'form': form})
+
+    @method_decorator(login_required(login_url='/'))
+    def post(self, request, *args, **kwargs):
+        event_id = self.kwargs['event_id']
+        event = Event.objects.get(pk=event_id)
+
+        form = EventForm(request.POST, instance=event)
+        if form.is_valid():
+            form.save()
+
+            messages.add_message(request,
+                                 messages.SUCCESS,
+                                 'The event was added successfully.')
+            return redirect('/administrator/events/list')
+        else:
+            messages.error(
+                request, 'The event was not updated due to an error.')
             return render(request, template_name='administrator/event-form.html', context={'form': form})
 
 

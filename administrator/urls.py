@@ -8,4 +8,6 @@ urlpatterns = [
          name='create-event'),
     path('events/list', views.ListEvents.as_view(),
          name='list-events'),
+    path('events/update/<int:event_id>/',
+         views.UpdateEvent.as_view(), name='update-event'),
 ]
