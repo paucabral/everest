@@ -229,6 +229,25 @@ body {
   background-color: black !important;
 }
 
+.dataTables_length {
+  text-transform: uppercase;
+}
+
+.dataTables_filter {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.dataTables_info {
+  text-transform: uppercase;
+  font-size: 0.7em;
+}
+
+.dataTables_paginate a,
+.dataTables_paginate .current {
+  color: white !important;
+}
+
 /* Fallback for Edge
             -------------------------------------------------- */
 
