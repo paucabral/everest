@@ -204,8 +204,9 @@
         <img class="profile-img my-auto" alt="{{ request.user.username }}" src="{% if request.user.profile.profile_pic %}{{ request.user.profile.profile_pic.url }}{% else %}https://icon-library.com/images/generic-user-icon/generic-user-icon-19.jpg{% endif %}" />
         <br>
         <h6 style="color: #ddd; font-size: 0.8em;">{{ request.user.username }}</h6>
-        <h5 style="color: #ddd"><b>Name:</b> {{ request.user.first_name }} {{ request.user.last_name }}</h5>
-        <h6 style="color: #ddd; font-size: 0.8em;">Date Joined: {{ request.user.date_joined }}</h6>
+        <h5 style="color: #ddd; text-transform: uppercase;"><b>Name:</b> {{ request.user.first_name }} {{ request.user.last_name }}</h5>
+        <h6 style="color: #ddd; font-size: 0.8em; text-transform: uppercase;">Date Joined: {{ request.user.date_joined }}</h6>
+        <br>
       </center>
       <hr class="my-3">
     
