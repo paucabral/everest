@@ -6,6 +6,8 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from .forms import *
 from django.contrib import messages
+from accounts.models import Profile, User
+from django.db.models import Q
 
 # Create your views here.
 
@@ -71,10 +73,6 @@ class ListEvents(View):
         events = Event.objects.all().order_by('-date')
         return render(request, template_name='administrator/list-events.html', context={'events': events})
 
-    @method_decorator(login_required(login_url='/'))
-    def post(self, request, *args, **kwargs):
-        pass
-
 
 @login_required(login_url='/')
 def deleteEvent(request, event_id):
@@ -88,3 +86,25 @@ def deleteEvent(request, event_id):
         return redirect('/administrator/events/list')
 
     return redirect('/administrator/events/list')
+
+
+class ListMembers(View):
+    @method_decorator(login_required(login_url='/'))
+    def get(self, request, *args, **kwargs):
+        members = User.objects.exclude(
+            Q(is_superuser=True)).order_by('-last_name')
+        return render(request, template_name='administrator/list-members.html', context={'members': members})
+
+
+@login_required(login_url='/')
+def deleteMember(request, member_id):
+    if request.method == "POST":
+        user = User.objects.filter(id=member_id)
+        user.delete()
+
+        messages.add_message(request,
+                             messages.SUCCESS,
+                             'The user was deleted successfully.')
+        return redirect('/administrator/members/list')
+
+    return redirect('/administrator/members/list')
