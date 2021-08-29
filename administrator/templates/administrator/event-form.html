@@ -79,27 +79,6 @@ input:checked + .slider:before {
   <form method="POST">
     {% csrf_token %}
 
-    {% for message in messages %}
-      {% if form.errors %}
-        {% for field in form %}
-          {% for error in field.errors %}
-            <div class="alert alert-danger" style="margin-left: 2em">
-              <strong>{{ error|escape }}</strong>
-            </div>
-          {% endfor %}
-        {% endfor %}
-      {% endif %}
-      {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
-        <p class="alert alert-danger alert-link" style="margin-left: 2em">
-          {{ message }}
-        </p>
-      {% else %}
-        <p class="alert alert-success alert-link" style="margin-left: 2em">
-          {{message}}
-        </p>
-      {% endif %}
-    {% endfor %}
-
     {{ form.media }}
 
     <div class="form-group row" style="margin-left: 2em;">
@@ -152,6 +131,12 @@ input:checked + .slider:before {
       
 
       <div class="form-group row text-center">
+        <style>
+            .input-group-text {
+              padding-bottom: 1em !important;
+              align-items: center !important;
+            }
+        </style>
 
         <div class="form-group row">
           <div class="col-md-6" style="margin-top:0.5rem; margin-bottom:0.5rem;" style="align-items: center;">
@@ -197,7 +182,7 @@ input:checked + .slider:before {
 
       <div class="form-group row my-3">
         <div class="col-md-12"></div>
-          <button type="submit" class="btn btn-primary form-control">SAVE</button>
+          <button type="submit" class="btn btn-primary form-control" style="font-weight: 800;">SAVE</button>
         </div>
       </div>
 
