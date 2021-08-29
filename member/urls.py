@@ -7,4 +7,6 @@ urlpatterns = [
          name='member-dashboard'),
     path('events/find', views.FindEvent.as_view(),
          name='find-event'),
+    path('events/event/<int:event_id>', views.ViewEvent.as_view(),
+         name='view-event'),
 ]

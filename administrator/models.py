@@ -22,6 +22,7 @@ class Event(models.Model):
     event_type = models.CharField(
         max_length=200, null=True, choices=EVENT_TYPE)
     date = models.DateTimeField(auto_now_add=False, null=True)
+    location = models.CharField(max_length=200, null=True)
     is_registration_open = models.BooleanField(null=False)
     is_attendance_open = models.BooleanField(null=False)
     cost = models.CharField(

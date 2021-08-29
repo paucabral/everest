@@ -19,6 +19,8 @@ class EventForm(ModelForm):
             {'class': 'form-control', 'required': 'required', 'autofocus': 'autofocus'})
         self.fields['short_description'].widget.attrs.update(
             {'class': 'form-control', })
+        self.fields['location'].widget.attrs.update(
+            {'class': 'form-control', })
         self.fields['detailed_description'].widget.attrs.update(
             {'class': 'form-control django-ckeditor-widget', })
         self.fields['event_type'].widget.attrs.update(

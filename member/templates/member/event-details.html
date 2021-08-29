@@ -1,0 +1,71 @@
+{% extends 'member/base.html' %}
+{% load static %}
+
+{% block title %}
+EVEREST | {{ event.event_name }}
+{% endblock %}
+
+{% block content %}
+
+<main class="container-fluid mx-2">
+  <div class="col container-fluid">
+    <div
+      class="shadow mb-5 card card-item-event {% if event.event_type == 'CONFERENCE' %}card-header-conference{% elif event.event_type == 'SEMINAR' %}card-header-seminar{% else %}card-header-workshop{% endif %}"
+      style="align-items: center; border: none; border-radius: 0.5em !important;">
+      <h3 class="card-header brand text-white" style="text-transform: uppercase; text-align: center;">{{ event.event_name }}</h3>
+      
+      <div class="card-body" style="background-color: aliceblue; width: 100%; border-bottom-left-radius: 0.5em !important; border-bottom-right-radius: 0.5em !important;">
+
+        <div class="card-title container-fluid">
+          {{ event.detailed_description|safe }}
+        </div>
+
+        <div class="row row-eq-height container-fluid" style="align-items: center; text-align: center;">
+          <div class="col container-fluid form-control" style="border-radius: 0; border-width: 2.5px; margin: 1px;">
+            <span><i>{{ event.short_description }}</i></span>
+          </div>
+        </div>
+
+        <div class="row row-eq-height container-fluid" style="align-items: center; text-align: center;">
+          <div class="col container-fluid form-control" style="border-radius: 0; border-width: 2.5px; margin: 1px;">
+            <h5 style="font-weight: bold;">DATE AND TIME</h5>
+            <span style="text-transform: uppercase;">{{ event.date }}</span>
+          </div>
+          <div class="col container-fluid form-control" style="border-radius: 0; border-width: 2.5px; margin: 1px;">
+            <h5 style="font-weight: bold;">LOCATION</h5>
+            {{ event.location }}
+          </div>
+          <div class="col container-fluid form-control" style="border-radius: 0; border-width: 2.5px; margin: 1px;">
+            <h5 style="font-weight: bold;">EVENT TYPE</h5>
+            {{ event.event_type }}
+          </div>
+        </div>
+
+        <div class="row row-eq-height container-fluid" style="align-items: center; text-align: center;">
+          <div class="col container-fluid form-control" style="border-radius: 0; border-width: 2.5px; margin: 1px;">
+            <h5 style="font-weight: bold;">PRICE</h5>
+            {{ event.cost }}: {{ event.price }}
+          </div>
+        </div>
+        <br>
+
+        <div class="row row-eq-height container-fluid" style="align-items: center; text-align: center;">
+          <div class="col container-fluid" style="align-items: center; text-align: center;">
+            <div class="form-group row my-3">
+                <a href="#" class="btn btn-primary mb-2" style="font-weight: 800;">REGISTER</a>
+            </div>
+          </div>
+          <div class="col container-fluid" style="align-items: center; text-align: center;">
+            <div class="form-group row my-3" style="margin-left: 1em; margin-right: 1em;">
+                <a href="#" class="btn btn-secondary mb-2" style="font-weight: 800;">PRESENT</a>
+            </div>
+          </div>
+        </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+{% endblock %}

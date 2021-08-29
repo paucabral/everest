@@ -27,3 +27,12 @@ class FindEvent(View):
         events = find_event_filter.qs
 
         return render(request, template_name='member/find-event.html', context={'events': events, 'find_event_filter': find_event_filter})
+
+
+class ViewEvent(View):
+    @method_decorator(login_required(login_url='/'))
+    def get(self, request, *args, **kwargs):
+        event_id = self.kwargs['event_id']
+        event = Event.objects.get(pk=event_id)
+
+        return render(request, template_name='member/event-details.html', context={'event': event})

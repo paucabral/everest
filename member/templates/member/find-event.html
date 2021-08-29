@@ -46,7 +46,11 @@ EVEREST | Find Events
               <h3 class="card-header brand text-white" style="text-transform: uppercase;">{{ event.event_name }}</h3>
               <div class="card-body" style="background-color: aliceblue; width: 100%;">
                 <h5 class="card-title">{{ event.short_description }}</h5>
-                <p class="card-text" style="font-size: 0.8em; text-transform: uppercase;">{{ event.date }}</p>
+                <p class="card-text" style="font-size: 0.8em;">
+                  <span style="text-transform: uppercase;">{{ event.date }}</span>
+                  <br>
+                  {{ event.location }}
+                </p>
                 <p class="card-text" style="font-weight: bold;">{{ event.event_type }}</p>
             
                 <p class="card-text">
@@ -54,7 +58,7 @@ EVEREST | Find Events
                 </p>
                 <br>
             
-                <a href="#" class="btn btn-details mb-2">MORE DETAILS</a>
+                <a href="/member/events/event/{{ event.id }}" class="btn btn-details mb-2">MORE DETAILS</a>
               </div>
             </div>
           </div>

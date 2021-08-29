@@ -3,6 +3,11 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
+img {
+  max-width: 100%;
+  height: auto !important;
+}
+
 .brand {
   font-weight: 1000;
 }
