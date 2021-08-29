@@ -74,3 +74,17 @@ class ListEvents(View):
     @method_decorator(login_required(login_url='/'))
     def post(self, request, *args, **kwargs):
         pass
+
+
+@login_required(login_url='/')
+def deleteEvent(request, event_id):
+    if request.method == "POST":
+        event = Event.objects.filter(id=event_id)
+        event.delete()
+
+        messages.add_message(request,
+                             messages.SUCCESS,
+                             'The event was deleted successfully.')
+        return redirect('/administrator/events/list')
+
+    return redirect('/administrator/events/list')

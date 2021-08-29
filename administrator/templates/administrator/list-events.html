@@ -20,7 +20,7 @@ EVEREST | List of Events
           ID
         </th>
         <th>
-          Event Title
+          Event
         </th>
         <th>
           Date
@@ -40,14 +40,14 @@ EVEREST | List of Events
         <td>{{ event.date }}</td>
         <td>{{ event.short_description }}</td>
         <td>
-          <a class="btn btn-interact btn-primary" href="/administrator/list-questions/{{i.id}}/">Attendees</a>
+          <a class="btn btn-interact btn-primary" href="#">Attendees</a>
         </td>
         <td>
           <a class="btn btn-interact btn-warning" href="/administrator/events/update/{{event.id}}/"><span
               style="color:white;">Update</span></a>
         </td>
         <td>
-          <form method="POST" onsubmit="return confirm('Are you sure you want to delete this entry?');">{% csrf_token %}
+          <form onsubmit="return confirm('Are you sure you want to delete the event: {{ event.id }}: {{ event.event_name }}?');" method="POST" action="{% url 'delete-event' event.id  %}">{% csrf_token %}
             <button type="submit" class="btn btn-interact btn-danger">Delete</button><input type="hidden" name="q_id"
               value="{{i.id}}" />
           </form>
