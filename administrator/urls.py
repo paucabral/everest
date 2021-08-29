@@ -6,4 +6,6 @@ urlpatterns = [
          name='administrator-dashboard'),
     path('events/create-new', views.CreateEvent.as_view(),
          name='create-event'),
+    path('events/list', views.ListEvents.as_view(),
+         name='list-events'),
 ]

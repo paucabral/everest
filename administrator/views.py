@@ -36,3 +36,14 @@ class CreateEvent(View):
         else:
             messages.error(request, 'The event was not added due to an error.')
             return render(request, template_name='administrator/event-form.html', context={'form': form})
+
+
+class ListEvents(View):
+    @method_decorator(login_required(login_url='/'))
+    def get(self, request, *args, **kwargs):
+        events = Event.objects.all().order_by('-date')
+        return render(request, template_name='administrator/list-events.html', context={'events': events})
+
+    @method_decorator(login_required(login_url='/'))
+    def post(self, request, *args, **kwargs):
+        pass

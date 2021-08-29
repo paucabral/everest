@@ -1,0 +1,106 @@
+{% extends 'administrator/base.html' %}
+{% load static %}
+
+{% block title %}
+EVEREST | List of Events
+{% endblock %}
+
+{% block content %}
+<main class="container-fluid">
+
+  <h1>List of Events</h1>
+  <hr class="my-4">
+
+  
+  
+  <div>
+    <table id="qlist" style="width: 100%;">
+      <thead>
+        <th>
+          Event ID
+        </th>
+        <th>
+          Event Tite
+        </th>
+        <th>
+          Description
+        </th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </thead>
+  
+      {% for event in events %}
+      <tr>
+        <td>{{ event.id }}</td>
+        <td>{{ event.event_name }}</td>
+        <td>{{ event.short_description }}</td>
+        <td>
+          <a class="btn btn-interact btn-primary" href="/administrator/list-questions/{{i.id}}/">Attendees</a>
+        </td>
+        <td>
+          <a class="btn btn-interact btn-warning" href="/administrator/update-quiz/{{i.id}}/"><span
+              style="color:white;">Update</span></a>
+        </td>
+        <td>
+          <form method="POST" onsubmit="return confirm('Are you sure you want to delete this entry?');">{% csrf_token %}
+            <button type="submit" class="btn btn-interact btn-danger">Delete</button><input type="hidden" name="q_id"
+              value="{{i.id}}" />
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+  
+    </table>
+  </div>
+
+
+</main>
+
+<script>
+  $(document).ready(function () {
+    $('#qlist').DataTable({
+      dom: 'Bfrltip',
+      buttons: [
+        {
+          extend: 'csv',
+          text: 'CSV',
+          className: 'btn btn-default',
+          exportOptions: {
+            columns: 'th:not(:nth-last-child(-n + 3))'
+          }
+        },
+        {
+          extend: 'excel',
+          text: 'Excel',
+          className: 'btn btn-default',
+          exportOptions: {
+            columns: 'th:not(:nth-last-child(-n + 3))'
+          }
+        },
+        {
+          extend: 'pdf',
+          text: 'PDF',
+          className: 'btn btn-default',
+          exportOptions: {
+            columns: 'th:not(:nth-last-child(-n + 3))'
+          }
+        },
+        {
+          extend: 'print',
+          text: 'Print',
+          className: 'btn btn-default',
+          exportOptions: {
+            columns: 'th:not(:nth-last-child(-n + 3))'
+          }
+        },
+      ],
+      "lengthMenu": [[5, 10, 50, -1], [5, 10, 50, "All"]],
+      "pagingType": "full_numbers",
+      "pageLength": 10,
+      "scrollX": true
+    });
+  });
+</script>
+
+{% endblock %}

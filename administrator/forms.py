@@ -27,6 +27,8 @@ class EventForm(ModelForm):
             {'class': 'form-control datetimepicker-input', 'data-target': '#datetimepicker1'})
         self.fields['is_attendance_open'].widget.attrs.update(
             {'class': '', })
+        self.fields['is_registration_open'].widget.attrs.update(
+            {'class': '', })
         self.fields['cost'].widget.attrs.update(
             {'class': 'form-control', 'onchange': 'displayDivDemo(this)'})
         self.fields['price'].widget.attrs.update(

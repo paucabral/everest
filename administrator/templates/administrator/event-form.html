@@ -104,20 +104,35 @@ input:checked + .slider:before {
 
     <div class="form-group row" style="margin-left: 2em;">
       <div class="form-group row">
-        <div class="col-md-11" style="margin-top:0.5rem; margin-bottom:0.5rem;">
+        <div class="col-md-8" style="margin-top:0.5rem; margin-bottom:0.5rem;">
           <label for="id_event_name">Event Name</label>
           {{ form.event_name }}
         </div>
-        <div class="col-md-1 text-center align-items-center" style="margin-top:0.5rem; margin-bottom:0.5rem;">
-          <label for="id_is_attendance_open">Attendance</label>
-          <br>
 
-          <label class="switch">
-            {{ form.is_attendance_open }}
-            <span class="slider round"></span>
-          </label>
-          
+        <div class="col-md-2 text-center align-items-center my-4" style="margin-top:0.5rem; margin-bottom:0.5rem;">
+          <div class="form-control">
+            <label for="id_is_registration_open">Registration</label>
+            <br>
+
+            <label class="switch">
+              {{ form.is_registration_open }}
+              <span class="slider round"></span>
+            </label>
+          </div>
         </div>
+
+        <div class="col-md-2 text-center align-items-center my-4" style="margin-top:0.5rem; margin-bottom:0.5rem;">
+          <div class="form-control">
+            <label for="id_is_attendance_open">Attendance</label>
+            <br>
+        
+            <label class="switch">
+              {{ form.is_attendance_open }}
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+        
       </div>
       
       <div class="form-group row">
