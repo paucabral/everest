@@ -32,6 +32,14 @@ body {
   align-self: center;
 }
 
+.nav-profile-img {
+  width: 2rem;
+  height: 2rem;
+  object-fit: cover;
+  border-radius: 50%;
+  align-self: center;
+}
+
 :root {
   --input-padding-x: 1.5rem;
   --input-padding-y: 0.75rem;

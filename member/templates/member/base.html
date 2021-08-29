@@ -179,13 +179,8 @@
           <ul class="nav navbar-nav ms-auto align-items-center">
             <li class="nav-item">
               <a class="nav-link menuItem" href="/">
-                <i class="fa fa-home fa-3" aria-hidden="true"></i> Home
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link menuItem" href="/admin">
-                <i class="fa fa-user fa-3" aria-hidden="true"></i>
-                Full Admin Panel
+                <img class="nav-profile-img my-auto" alt="{{ request.user.username }}"
+                  src="{% if request.user.profile.profile_pic %}{{ request.user.profile.profile_pic.url }}{% else %}https://icon-library.com/images/generic-user-icon/generic-user-icon-19.jpg{% endif %}" /> {{ request.user.username }}
               </a>
             </li>
             <li class="nav-item">
@@ -208,26 +203,26 @@
       <center>
         <img class="profile-img my-auto" alt="{{ request.user.username }}" src="{% if request.user.profile.profile_pic %}{{ request.user.profile.profile_pic.url }}{% else %}https://icon-library.com/images/generic-user-icon/generic-user-icon-19.jpg{% endif %}" />
         <br>
-        <br>
-        <h4 style="color: #ddd; text-transform: uppercase;">{{ request.user.first_name }} {{ request.user.last_name }}</h4>
-        <h6 style="color: #ddd">{{ request.user.username }}</h6><br>
+        <h6 style="color: #ddd; font-size: 0.8em;">{{ request.user.username }}</h6>
+        <h5 style="color: #ddd"><b>Name:</b> {{ request.user.first_name }} {{ request.user.last_name }}</h5>
+        <h6 style="color: #ddd; font-size: 0.8em;">Date Joined: {{ request.user.date_joined }}</h6>
       </center>
       <hr class="my-3">
     
       <ul class="sidebar-nav">
-        <li class="nav-item"><a href="/administrator/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+        <li class="nav-item"><a href="/member/dashboard"><i class="fas fa-home"></i> Home</a></li>
         <li class="nav-item dropdown">
-          <a href="#" class="dropdown-btn" href="#" id="navigation-dropdown"><i class="fas fa-calendar-plus"></i>&nbsp; Events &nbsp; &nbsp;&nbsp;<i class="fa fa-caret-down"></i></a>
+          <a href="#" class="dropdown-btn" href="#" id="navigation-dropdown"><i class="fas fa-calendar-plus"></i>&nbsp; Events &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<i class="fa fa-caret-down"></i></a>
           <div class="dropdown-container">
-            <a style="padding-left: 20px;" href="/administrator/events/create-new"><i class="fas fa-edit"></i> Create a New Event</a>
-            <a style="padding-left: 20px;" href="/administrator/events/list"><i class="fa fa-list" aria-hidden="true"></i> &nbsp;List All Events</a>
+            <a style="padding-left: 20px;" href="#"><i class="fas fa-edit"></i> Find a New Event</a>
+            <a style="padding-left: 20px;" href="#"><i class="fa fa-list" aria-hidden="true"></i> &nbsp;Events Joined</a>
           </div>
         </li>
         <li class="nav-item dropdown">
-          <a href="#" class="dropdown-btn" href="#" id="navigation-dropdown"><i class="fas fa-user"></i> &nbsp;Members<i
+          <a href="#" class="dropdown-btn" href="#" id="navigation-dropdown"><i class="fas fa-edit"></i> Transactions<i
               class="fa fa-caret-down"></i></a>
           <div class="dropdown-container">
-            <a style="padding-left: 20px;" href="/administrator/members/list"><i class="fas fa-edit"></i> List All Members</a>
+            <a style="padding-left: 20px;" href="#"><i class="fas fa-book"></i> Transactions History</a>
             <a style="padding-left: 20px;" href="#"><i class="fas fa-spinner"></i> Pending Transactions</a>
           </div>
         </li>
