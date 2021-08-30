@@ -8,6 +8,39 @@ EVEREST | {{ event.event_name }}
 {% block content %}
 
 <main class="container-fluid mx-2">
+
+  <!-- start Popup -->
+  {% for message in messages %}
+    {% if form.errors %}
+      {% for field in form %}
+        {% for error in field.errors %}
+          <div class="alert alert-danger alert-dismissible"
+            style="z-index: 2; background-color: #C0392B; position: absolute; margin-left: 2em; right: 2em; top: 8em;">
+            <strong>{{ error|escape }}</strong>
+            <button type="button" class="close btn btn-interact text-white" data-dismiss="alert"
+              style="position: absolute; top:0; right: -2.7em;"><i class="far fa-times-circle fa-1x text-white"></i></button>
+          </div>
+        {% endfor %}
+      {% endfor %}
+    {% endif %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+      <p class="alert alert-danger alert-link alert-dismissible text-white"
+        style="z-index: 2; background-color: #C0392B; position: absolute; margin-left: 2em; right: 2em; top: 8em;">
+        {{ message }}
+        <button type="button" class="close btn btn-interact" data-dismiss="alert"
+          style="position: absolute; top:0; right: -2.7em;"><i class="far fa-times-circle fa-1x text-white"></i></button>
+      </p>
+    {% else %}
+      <p class="alert alert-success alert-link alert-dismissible text-white"
+        style="z-index: 2; background-color: #27AE60; position: absolute; margin-left: 2em; right: 2em; top: 8em;">
+        {{message}}
+        <button type="button" class="close btn btn-interact" data-dismiss="alert"
+          style="position: absolute; top:0; right: -2.7em;"><i class="far fa-times-circle fa-1x text-white"></i></button>
+      </p>
+    {% endif %}
+  {% endfor %}
+  <!-- end Popup -->
+
   <div class="col container-fluid">
     <div
       class="shadow mb-5 card card-item-event {% if event.event_type == 'CONFERENCE' %}card-header-conference{% elif event.event_type == 'SEMINAR' %}card-header-seminar{% else %}card-header-workshop{% endif %}"
@@ -50,11 +83,31 @@ EVEREST | {{ event.event_name }}
         <br>
 
         <div class="row row-eq-height container-fluid" style="align-items: center; text-align: center;">
-          <div class="col container-fluid" style="align-items: center; text-align: center;">
-            <div class="form-group row my-3">
-                <a href="#" class="btn btn-primary mb-2" style="font-weight: 800;">REGISTER</a>
+          {% if event.is_registration_open and event.id in user_registered_events %}
+            <div class="col container-fluid" style="align-items: center; text-align: center;">
+              <div class="form-group row my-3" style="margin-left: 1em; margin-right: 1em;">
+                <form class="col container-fluid" style="align-items: center; text-align: center;"
+                  onsubmit="return confirm('Are you sure you want to unregister from the event: {{ event.event_name }}?');" method="POST"
+                  action="{% url 'unregister-event' event.id  %}">{% csrf_token %}
+                  <button type="submit" class="btn btn-danger mb-2" style="font-weight: 800;">UNREGISTER</button><input type="hidden"
+                    name="q_id" value="{{i.id}}" />
+                </form>
+              </div>
             </div>
-          </div>
+          {% elif event.is_registration_open and event.id not in user_registered_events  %}
+            <div class="col container-fluid" style="align-items: center; text-align: center;">
+              <div class="form-group row my-3" style="margin-left: 1em; margin-right: 1em;">
+                <form class="col container-fluid" style="align-items: center; text-align: center;"
+                  onsubmit="return confirm('Confirm registration for the event: {{ event.event_name }}?');" method="POST"
+                  action="{% url 'register-event' event.id  %}">{% csrf_token %}
+                  <button type="submit" class="btn btn-primary mb-2" style="font-weight: 800;">REGISTER</button><input type="hidden"
+                    name="q_id" value="{{i.id}}" />
+                </form>
+              </div>
+            </div>
+          {% else %}
+            <h5><i>Registration not yet available.</i></h5>
+          {% endif %}
           <div class="col container-fluid" style="align-items: center; text-align: center;">
             <div class="form-group row my-3" style="margin-left: 1em; margin-right: 1em;">
                 <a href="#" class="btn btn-secondary mb-2" style="font-weight: 800;">PRESENT</a>

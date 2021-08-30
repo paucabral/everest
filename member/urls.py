@@ -9,4 +9,8 @@ urlpatterns = [
          name='find-event'),
     path('events/event/<int:event_id>', views.ViewEvent.as_view(),
          name='view-event'),
+    path('events/event/register/<int:event_id>',
+         views.registerEvent, name='register-event'),
+    path('events/event/unregister/<int:event_id>',
+         views.unregisterEvent, name='unregister-event'),
 ]

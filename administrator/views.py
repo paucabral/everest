@@ -2,6 +2,7 @@ from django.core.exceptions import EmptyResultSet
 from django.shortcuts import render, redirect
 from django.views import View
 from django.http import HttpResponse
+from .decorators import *
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from .forms import *
@@ -14,17 +15,20 @@ from django.db.models import Q
 
 class AdministratorDashboard(View):
     @method_decorator(login_required(login_url='/'))
+    @method_decorator(admin_only())
     def get(self, request, *args, **kwargs):
         return render(request, template_name='administrator/dashboard.html', context={})
 
 
 class CreateEvent(View):
     @method_decorator(login_required(login_url='/'))
+    @method_decorator(admin_only())
     def get(self, request, *args, **kwargs):
         form = EventForm()
         return render(request, template_name='administrator/event-form.html', context={'form': form})
 
     @method_decorator(login_required(login_url='/'))
+    @method_decorator(admin_only())
     def post(self, request, *args, **kwargs):
         form = EventForm(request.POST)
         if form.is_valid():
@@ -41,6 +45,7 @@ class CreateEvent(View):
 
 class UpdateEvent(View):
     @method_decorator(login_required(login_url='/'))
+    @method_decorator(admin_only())
     def get(self, request, *args, **kwargs):
         event_id = self.kwargs['event_id']
         event = Event.objects.get(pk=event_id)
@@ -49,6 +54,7 @@ class UpdateEvent(View):
         return render(request, template_name='administrator/event-form.html', context={'form': form})
 
     @method_decorator(login_required(login_url='/'))
+    @method_decorator(admin_only())
     def post(self, request, *args, **kwargs):
         event_id = self.kwargs['event_id']
         event = Event.objects.get(pk=event_id)
@@ -69,12 +75,14 @@ class UpdateEvent(View):
 
 class ListEvents(View):
     @method_decorator(login_required(login_url='/'))
+    @method_decorator(admin_only())
     def get(self, request, *args, **kwargs):
         events = Event.objects.all().order_by('-date')
         return render(request, template_name='administrator/list-events.html', context={'events': events})
 
 
 @login_required(login_url='/')
+@admin_only()
 def deleteEvent(request, event_id):
     if request.method == "POST":
         event = Event.objects.filter(id=event_id)
@@ -90,6 +98,7 @@ def deleteEvent(request, event_id):
 
 class ListMembers(View):
     @method_decorator(login_required(login_url='/'))
+    @method_decorator(admin_only())
     def get(self, request, *args, **kwargs):
         members = User.objects.exclude(
             Q(is_superuser=True)).order_by('-last_name')
@@ -97,6 +106,7 @@ class ListMembers(View):
 
 
 @login_required(login_url='/')
+@admin_only()
 def deleteMember(request, member_id):
     if request.method == "POST":
         user = User.objects.filter(id=member_id)

@@ -1,12 +1,15 @@
 from django.db.models import query
 from django.shortcuts import render, redirect
 from django.views import View
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from administrator.models import Event
 from .models import *
 from .filters import *
+from django.contrib import messages
+from django.utils import timezone
+import datetime
 
 # Create your views here.
 
@@ -34,5 +37,46 @@ class ViewEvent(View):
     def get(self, request, *args, **kwargs):
         event_id = self.kwargs['event_id']
         event = Event.objects.get(pk=event_id)
+        user = Profile.objects.get(id=request.user.profile.id)
 
-        return render(request, template_name='member/event-details.html', context={'event': event})
+        user_registered_events = EventRegistration.objects.filter(
+            user=user).values_list('event_id', flat=True)
+
+        return render(request, template_name='member/event-details.html', context={'event': event, 'user_registered_events': user_registered_events})
+
+
+@login_required(login_url='/')
+def registerEvent(request, event_id):
+    if request.method == "POST":
+        user = Profile.objects.get(id=request.user.profile.id)
+        event = Event.objects.get(id=event_id)
+        time = timezone.now()
+
+        if event.cost == "FREE":
+            approval = True
+            new_event_registration = EventRegistration.objects.create(
+                user=user, event=event, time_of_attendance=time, is_registration_approved=approval)
+
+            messages.add_message(request,
+                                 messages.SUCCESS,
+                                 'You have successfully registered on the event.')
+            return redirect("/member/events/event/{}".format(event_id))
+
+        else:
+            return redirect('/')
+
+
+@login_required(login_url='/')
+def unregisterEvent(request, event_id):
+    if request.method == "POST":
+        user = Profile.objects.get(id=request.user.profile.id)
+        event = Event.objects.get(id=event_id)
+
+        event_registered = EventRegistration.objects.filter(
+            user=user, event=event)
+
+        event_registered.delete()
+        messages.add_message(request,
+                             messages.SUCCESS,
+                             'You have successfully unregistered from the event.')
+        return redirect("/member/events/event/{}".format(event_id))
