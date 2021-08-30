@@ -58,7 +58,7 @@ def registerEvent(request, event_id):
         if event.cost == "FREE":
             approval = 'APPROVED'
             new_event_registration = EventRegistration.objects.create(
-                user=user, event=event, time_of_attendance=time, is_registration_approved=approval)
+                user=user, event=event, is_registration_approved=approval)
 
             messages.add_message(request,
                                  messages.SUCCESS,
@@ -82,4 +82,22 @@ def unregisterEvent(request, event_id):
         messages.add_message(request,
                              messages.SUCCESS,
                              'You have successfully unregistered from the event.')
+        return redirect("/member/events/event/{}".format(event_id))
+
+
+@login_required(login_url='/')
+def confirmAttendance(request, event_id):
+    if request.method == "POST":
+        user = Profile.objects.get(id=request.user.profile.id)
+        event = Event.objects.get(id=event_id)
+
+        event_registered = EventRegistration.objects.get(
+            user=user, event=event)
+
+        event_registered.time_of_attendance = timezone.now()
+        event_registered.save()
+
+        messages.add_message(request,
+                             messages.SUCCESS,
+                             'Yor attendance was recorded successfully.')
         return redirect("/member/events/event/{}".format(event_id))

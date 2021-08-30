@@ -107,12 +107,13 @@ EVEREST | {{ event.event_name }}
             <h5 class="mb-2"><i>Registration is either closed or not yet available.</i></h5>
           {% endif %}
           
+          <!-- HANDLE ATTENDANCE LATER! -->
           {% if event.is_attendance_open and event.id in user_registered_events %}
           <div class="col container-fluid" style="align-items: center; text-align: center;">
             <div class="form-group col-md my-3" style="margin-left: 1em; margin-right: 1em;">
               <form style="align-items: center; text-align: center;"
-                onsubmit="return confirm('Confirm registration for the event: {{ event.event_name }}?');" method="POST"
-                action="{% url 'register-event' event.id  %}">{% csrf_token %}
+                method="POST"
+                action="{% url 'confirm-attendance' event.id  %}">{% csrf_token %}
                 <button type="submit" class="btn btn-secondary mb-2 form-control" style="font-weight: 800;">CONFIRM ATTENDANCE</button>
               </form>
             </div>
