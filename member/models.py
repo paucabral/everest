@@ -15,6 +15,7 @@ class EventRegistration(models.Model):
     )
 
     user = models.ForeignKey(Profile, null=True, on_delete=models.CASCADE)
+    receipt = models.ImageField(null=True, blank=True)
     event = models.ForeignKey(Event, null=True, on_delete=models.CASCADE)
     is_registration_approved = models.CharField(
         max_length=200, null=True, choices=APPROVAL)

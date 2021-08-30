@@ -10,6 +10,7 @@ from .filters import *
 from django.contrib import messages
 from django.utils import timezone
 import datetime
+from .forms import EventRegistrationForm
 
 # Create your views here.
 
@@ -82,7 +83,7 @@ def registerEvent(request, event_id):
             return redirect("/member/events/event/{}".format(event_id))
 
         else:
-            return redirect('/')
+            return redirect('/member/events/event/register/form/{}'.format(event_id))
 
 
 @login_required(login_url='/')
@@ -116,4 +117,39 @@ def confirmAttendance(request, event_id):
         messages.add_message(request,
                              messages.SUCCESS,
                              'Yor attendance was recorded successfully.')
+        return redirect("/member/events/event/{}".format(event_id))
+
+
+class PaidRegistration(View):
+    @method_decorator(login_required(login_url='/'))
+    def get(self, request, *args, **kwargs):
+        event_id = self.kwargs['event_id']
+        event = Event.objects.get(pk=event_id)
+        user = Profile.objects.get(id=request.user.profile.id)
+        approval = "PENDING"
+
+        form = EventRegistrationForm()
+
+        user_registered_event = EventRegistration.objects.filter(
+            user=user).filter(event=event_id).values_list('event_id', flat=True)
+
+        return render(request, template_name='member/paid-registration-form.html', context={'form': form, 'user_registered_event': user_registered_event, 'user': user, 'event': event, 'approval': approval})
+
+    @method_decorator(login_required(login_url='/'))
+    def post(self, request, *args, **kwargs):
+        event_id = self.kwargs['event_id']
+        event = Event.objects.get(pk=event_id)
+        user = Profile.objects.get(id=request.user.profile.id)
+        approval = "PENDING"
+
+        form = EventRegistrationForm(request.POST)
+        form_instance = form.instance
+        form_instance.event = event
+        form_instance.user = user
+        form_instance.is_registration_approved = approval
+        form_instance.save()
+
+        messages.add_message(request,
+                             messages.SUCCESS,
+                             'Your receipt/proof of payment was submitted successfully.')
         return redirect("/member/events/event/{}".format(event_id))

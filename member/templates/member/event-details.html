@@ -84,27 +84,29 @@ EVEREST | {{ event.event_name }}
 
         <div class="row row-eq-height container-fluid" style="align-items: center; text-align: center;">
           {% if event.is_registration_open and event.id in user_registered_events_approved and event.id not in user_registered_events_pending and event.id not in user_registered_events_rejected %}
-            <div class="col container-fluid" style="align-items: center; text-align: center;">
-              <div class="form-group col-md my-3" style="margin-left: 1em; margin-right: 1em;">
-                <form style="align-items: center; text-align: center;"
-                  onsubmit="return confirm('Are you sure you want to unregister from the event: {{ event.event_name }}?');" method="POST"
-                  action="{% url 'unregister-event' event.id  %}">{% csrf_token %}
-                  <button type="submit" class="btn btn-danger mb-2 form-control" style="font-weight: 800;">UNREGISTER</button>
-                </form>
+            {% if event.cost == "FREE" %}
+              <div class="col container-fluid" style="align-items: center; text-align: center;">
+                <div class="form-group col-md my-3" style="margin-left: 1em; margin-right: 1em;">
+                  <form style="align-items: center; text-align: center;"
+                    onsubmit="return confirm('Are you sure you want to unregister from the event: {{ event.event_name }}?');"
+                    method="POST" action="{% url 'unregister-event' event.id  %}">{% csrf_token %}
+                    <button type="submit" class="btn btn-danger mb-2 form-control" style="font-weight: 800;">UNREGISTER</button>
+                  </form>
+                </div>
               </div>
-            </div>
+            {% endif %}
           {% elif event.is_registration_open and event.id not in user_registered_events_approved and event.id in user_registered_events_pending and event.id not in user_registered_events_rejected %}
-            <h5 class="mb-2"><i>Your registration awaits approval and verification by the moderator. Please check back later and refer to your transactions for the status.</i></h5>
+            <h5 class="mb-2"><i>Your registration awaits approval and verification by the moderator. Please check back later and refer to your transactions page for the status.</i></h5>
           {% elif event.is_registration_open and event.id not in user_registered_events_approved and event.id not in user_registered_events_pending and event.id not in user_registered_events_rejected  %}
-            <div class="col container-fluid" style="align-items: center; text-align: center;">
-              <div class="form-group col-md my-3" style="margin-left: 1em; margin-right: 1em;">
-                <form style="align-items: center; text-align: center;"
-                  onsubmit="return confirm('Confirm registration for the event: {{ event.event_name }}?');" method="POST"
-                  action="{% url 'register-event' event.id  %}">{% csrf_token %}
-                  <button type="submit" class="btn btn-primary mb-2 form-control" style="font-weight: 800;">REGISTER</button>
-                </form>
-              </div>
+          <div class="col container-fluid" style="align-items: center; text-align: center;">
+            <div class="form-group col-md my-3" style="margin-left: 1em; margin-right: 1em;">
+              <form style="align-items: center; text-align: center;"
+                onsubmit="return confirm('Confirm registration for the event: {{ event.event_name }}?');" method="POST"
+                action="{% url 'register-event' event.id  %}">{% csrf_token %}
+                <button type="submit" class="btn btn-primary mb-2 form-control" style="font-weight: 800;">REGISTER</button>
+              </form>
             </div>
+          </div>
           {% elif event.is_registration_open and event.id not in user_registered_events_approved and event.id not in user_registered_events_pending and event.id in user_registered_events_rejected %}
             <h5 class="mb-2"><i>Your registration transaction has been <b>rejected</b>. This may be either due to invalid or unclear receipt. For clarifications and dispute, please reach the support team through the following contact information.</i></h5>
             
@@ -133,7 +135,6 @@ EVEREST | {{ event.event_name }}
             <h5 class="mb-2"><i>Registration is either closed or not yet available.</i></h5>
           {% endif %}
           
-          <!-- HANDLE ATTENDANCE LATER! -->
           {% if event.is_attendance_open and event.id in user_registered_events_approved and event.id not in user_registered_events_pending and event.id not in user_registered_events_rejected and event.id not in user_confirmed_attendance %}
           <div class="col container-fluid" style="align-items: center; text-align: center;">
             <div class="form-group col-md my-3" style="margin-left: 1em; margin-right: 1em;">
@@ -152,6 +153,7 @@ EVEREST | {{ event.event_name }}
             
           {% endif %}
         </div>
+        <br>
         </div>
 
       </div>

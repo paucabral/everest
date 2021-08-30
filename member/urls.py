@@ -15,4 +15,6 @@ urlpatterns = [
          views.unregisterEvent, name='unregister-event'),
     path('events/event/confirm-attendance/<int:event_id>',
          views.confirmAttendance, name='confirm-attendance'),
+    path('events/event/register/form/<int:event_id>', views.PaidRegistration.as_view(),
+         name='paid-registration'),
 ]
