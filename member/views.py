@@ -4,7 +4,7 @@ from django.views import View
 from django.http import HttpResponse, HttpResponseRedirect
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
-from administrator.models import Event
+from administrator.models import Event, SupportContact
 from .models import *
 from .filters import *
 from django.contrib import messages
@@ -26,13 +26,17 @@ class FindEvent(View):
         events = Event.objects.filter(
             is_registration_open=True).order_by('date')
         user = Profile.objects.get(id=request.user.profile.id)
-        user_registered_events = EventRegistration.objects.filter(
-            user=user).values_list('event_id', flat=True)
+        user_registered_events_approved = EventRegistration.objects.filter(
+            user=user).filter(is_registration_approved='APPROVED').values_list('event_id', flat=True)
+        user_registered_events_pending = EventRegistration.objects.filter(
+            user=user).filter(is_registration_approved='PENDING').values_list('event_id', flat=True)
+        user_registered_events_rejected = EventRegistration.objects.filter(
+            user=user).filter(is_registration_approved='REJECTED').values_list('event_id', flat=True)
 
         find_event_filter = FindEventFilter(request.GET, queryset=events)
         events = find_event_filter.qs
 
-        return render(request, template_name='member/find-event.html', context={'events': events, 'user_registered_events': user_registered_events, 'find_event_filter': find_event_filter})
+        return render(request, template_name='member/find-event.html', context={'events': events, 'user_registered_events_approved': user_registered_events_approved, 'user_registered_events_pending': user_registered_events_pending, 'user_registered_events_rejected': user_registered_events_rejected, 'find_event_filter': find_event_filter})
 
 
 class ViewEvent(View):
@@ -42,10 +46,19 @@ class ViewEvent(View):
         event = Event.objects.get(pk=event_id)
         user = Profile.objects.get(id=request.user.profile.id)
 
-        user_registered_events = EventRegistration.objects.filter(
-            user=user).values_list('event_id', flat=True)
+        support_contacts_email = SupportContact.objects.filter(
+            contact_type='EMAIL').values_list('support_contact', flat=True)
+        support_contacts_number = SupportContact.objects.filter(
+            contact_type='NUMBER').values_list('support_contact', flat=True)
 
-        return render(request, template_name='member/event-details.html', context={'event': event, 'user_registered_events': user_registered_events})
+        user_registered_events_approved = EventRegistration.objects.filter(
+            user=user).filter(is_registration_approved='APPROVED').values_list('event_id', flat=True)
+        user_registered_events_pending = EventRegistration.objects.filter(
+            user=user).filter(is_registration_approved='PENDING').values_list('event_id', flat=True)
+        user_registered_events_rejected = EventRegistration.objects.filter(
+            user=user).filter(is_registration_approved='REJECTED').values_list('event_id', flat=True)
+
+        return render(request, template_name='member/event-details.html', context={'event': event, 'user_registered_events_approved': user_registered_events_approved, 'user_registered_events_pending': user_registered_events_pending, 'user_registered_events_rejected': user_registered_events_rejected, 'support_contacts_email': support_contacts_email, 'support_contacts_number': support_contacts_number})
 
 
 @login_required(login_url='/')

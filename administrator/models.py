@@ -31,3 +31,17 @@ class Event(models.Model):
 
     def __str__(self):
         return self.event_name
+
+
+class SupportContact(models.Model):
+    CONTACT_TYPE = (
+        ('EMAIL', 'EMAIL'),
+        ('NUMBER', 'NUMBER'),
+    )
+
+    support_contact = models.CharField(max_length=200, null=True)
+    contact_type = models.CharField(
+        max_length=200, null=True, choices=CONTACT_TYPE)
+
+    def __str__(self):
+        return self.support_contact

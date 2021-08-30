@@ -83,7 +83,7 @@ EVEREST | {{ event.event_name }}
         <br>
 
         <div class="row row-eq-height container-fluid" style="align-items: center; text-align: center;">
-          {% if event.is_registration_open and event.id in user_registered_events %}
+          {% if event.is_registration_open and event.id in user_registered_events_approved and event.id not in user_registered_events_pending and event.id not in user_registered_events_rejected %}
             <div class="col container-fluid" style="align-items: center; text-align: center;">
               <div class="form-group col-md my-3" style="margin-left: 1em; margin-right: 1em;">
                 <form style="align-items: center; text-align: center;"
@@ -93,7 +93,9 @@ EVEREST | {{ event.event_name }}
                 </form>
               </div>
             </div>
-          {% elif event.is_registration_open and event.id not in user_registered_events  %}
+          {% elif event.is_registration_open and event.id not in user_registered_events_approved and event.id in user_registered_events_pending and event.id not in user_registered_events_rejected %}
+            <h5 class="mb-2"><i>Your registration awaits approval and verification by the moderator. Please check back later and refer to your transactions for the status.</i></h5>
+          {% elif event.is_registration_open and event.id not in user_registered_events_approved and event.id not in user_registered_events_pending and event.id not in user_registered_events_rejected  %}
             <div class="col container-fluid" style="align-items: center; text-align: center;">
               <div class="form-group col-md my-3" style="margin-left: 1em; margin-right: 1em;">
                 <form style="align-items: center; text-align: center;"
@@ -103,12 +105,36 @@ EVEREST | {{ event.event_name }}
                 </form>
               </div>
             </div>
-          {% else %}
+          {% elif event.is_registration_open and event.id not in user_registered_events_approved and event.id not in user_registered_events_pending and event.id in user_registered_events_rejected %}
+            <h5 class="mb-2"><i>Your registration transaction has been <b>rejected</b>. This may be either due to invalid or unclear receipt. For clarifications and dispute, please reach the support team through the following contact information.</i></h5>
+            
+            <div class="col container-fluid" style="align-items: center; text-align: center;">
+              <div class="form-group col-md my-3" style="margin-left: 1em; margin-right: 1em;">
+                <h5><b>Email Address/es:</b></h5>
+                <p>
+                  {% for support_contact in support_contacts_email %}
+                    {{ support_contact }}<br>
+                  {% endfor %}
+                </p>
+              </div>
+            </div>
+
+            <div class="col container-fluid" style="align-items: center; text-align: center;">
+              <div class="form-group col-md my-3" style="margin-left: 1em; margin-right: 1em;">
+                <h5><b>Contact Number:</b></h5>
+                <p>
+                  {% for support_contact in support_contacts_number %}
+                    {{ support_contact }}<br>
+                  {% endfor %}
+                </p>
+              </div>
+            </div>
+            {% else %}
             <h5 class="mb-2"><i>Registration is either closed or not yet available.</i></h5>
           {% endif %}
           
           <!-- HANDLE ATTENDANCE LATER! -->
-          {% if event.is_attendance_open and event.id in user_registered_events %}
+          {% if event.is_attendance_open and event.id in user_registered_events_approved and event.id not in user_registered_events_pending %}
           <div class="col container-fluid" style="align-items: center; text-align: center;">
             <div class="form-group col-md my-3" style="margin-left: 1em; margin-right: 1em;">
               <form style="align-items: center; text-align: center;"
@@ -118,7 +144,7 @@ EVEREST | {{ event.event_name }}
               </form>
             </div>
           </div>
-          {% elif event.is_attendance_open is False and event.id in user_registered_events %}
+          {% elif event.is_attendance_open is False and event.id in user_registered_events_approved and event.id not in user_registered_events_pending %}
             <h5 class="mb-2"><i>Check back later for attendance or wait for the moderator's announcement.</i></h5>
           {% else %}
 
