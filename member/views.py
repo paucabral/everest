@@ -153,3 +153,18 @@ class PaidRegistration(View):
                              messages.SUCCESS,
                              'Your receipt/proof of payment was submitted successfully.')
         return redirect("/member/events/event/{}".format(event_id))
+
+
+class EventsJoined(View):
+    @method_decorator(login_required(login_url='/'))
+    def get(self, request, *args, **kwargs):
+        events = Event.objects.filter(
+            is_registration_open=True).order_by('date')
+        user = Profile.objects.get(id=request.user.profile.id)
+        user_registered_events = EventRegistration.objects.filter(
+            user=user).values_list('event_id', flat=True)
+
+        joined_events_filter = EventsJoinedFilter(request.GET, queryset=events)
+        events = joined_events_filter.qs
+
+        return render(request, template_name='member/events-joined.html', context={'events': events, 'user_registered_events': user_registered_events, 'joined_events_filter': joined_events_filter})
