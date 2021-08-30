@@ -16,9 +16,9 @@ class FindEventFilter(django_filters.FilterSet):
 
 
 class EventsJoinedFilter(django_filters.FilterSet):
-    name = CharFilter(field_name='event_name', lookup_expr='icontains')
-    cost = ChoiceFilter(field_name='cost', choices=Event.EVENT_COST)
-    event_type = ChoiceFilter(field_name='event_type',
+    name = CharFilter(field_name='event__event_name', lookup_expr='icontains')
+    cost = ChoiceFilter(field_name='event__cost', choices=Event.EVENT_COST)
+    event_type = ChoiceFilter(field_name='event__event_type',
                               choices=Event.EVENT_TYPE)
     approval = ChoiceFilter(field_name='is_registration_approved',
                             choices=EventRegistration.APPROVAL)

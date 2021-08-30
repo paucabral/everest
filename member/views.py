@@ -158,8 +158,7 @@ class PaidRegistration(View):
 class EventsJoined(View):
     @method_decorator(login_required(login_url='/'))
     def get(self, request, *args, **kwargs):
-        events = Event.objects.filter(
-            is_registration_open=True).order_by('date')
+        events = EventRegistration.objects.all().order_by('event__date')
         user = Profile.objects.get(id=request.user.profile.id)
         user_registered_events = EventRegistration.objects.filter(
             user=user).values_list('event_id', flat=True)
