@@ -56,7 +56,7 @@ def registerEvent(request, event_id):
         time = timezone.now()
 
         if event.cost == "FREE":
-            approval = True
+            approval = 'APPROVED'
             new_event_registration = EventRegistration.objects.create(
                 user=user, event=event, time_of_attendance=time, is_registration_approved=approval)
 
