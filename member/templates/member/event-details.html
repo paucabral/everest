@@ -104,7 +104,7 @@ EVEREST | {{ event.event_name }}
               </div>
             </div>
           {% else %}
-            <h5 class="mb-2"><i>Registration not yet available.</i></h5>
+            <h5 class="mb-2"><i>Registration is either closed or not yet available.</i></h5>
           {% endif %}
           
           {% if event.is_attendance_open and event.id in user_registered_events %}

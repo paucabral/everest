@@ -25,11 +25,14 @@ class FindEvent(View):
     def get(self, request, *args, **kwargs):
         events = Event.objects.filter(
             is_registration_open=True).order_by('date')
+        user = Profile.objects.get(id=request.user.profile.id)
+        user_registered_events = EventRegistration.objects.filter(
+            user=user).values_list('event_id', flat=True)
 
         find_event_filter = FindEventFilter(request.GET, queryset=events)
         events = find_event_filter.qs
 
-        return render(request, template_name='member/find-event.html', context={'events': events, 'find_event_filter': find_event_filter})
+        return render(request, template_name='member/find-event.html', context={'events': events, 'user_registered_events': user_registered_events, 'find_event_filter': find_event_filter})
 
 
 class ViewEvent(View):
