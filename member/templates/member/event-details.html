@@ -134,7 +134,7 @@ EVEREST | {{ event.event_name }}
           {% endif %}
           
           <!-- HANDLE ATTENDANCE LATER! -->
-          {% if event.is_attendance_open and event.id in user_registered_events_approved and event.id not in user_registered_events_pending %}
+          {% if event.is_attendance_open and event.id in user_registered_events_approved and event.id not in user_registered_events_pending and event.id not in user_registered_events_rejected and event.id not in user_confirmed_attendance %}
           <div class="col container-fluid" style="align-items: center; text-align: center;">
             <div class="form-group col-md my-3" style="margin-left: 1em; margin-right: 1em;">
               <form style="align-items: center; text-align: center;"
@@ -144,10 +144,12 @@ EVEREST | {{ event.event_name }}
               </form>
             </div>
           </div>
-          {% elif event.is_attendance_open is False and event.id in user_registered_events_approved and event.id not in user_registered_events_pending %}
+          {% elif event.is_attendance_open and event.id in user_registered_events_approved and event.id not in user_registered_events_pending and event.id not in user_registered_events_rejected and event.id not in user_confirmed_attendance %}
+            <h5 class="mb-2"><i>Your attendance to the event has been recorded.</i></h5>
+          {% elif event.is_attendance_open is False and event.id in user_registered_events_approved and event.id not in user_registered_events_pending and event.id not in user_registered_events_rejected and event.id not in user_confirmed_attendance %}
             <h5 class="mb-2"><i>Check back later for attendance or wait for the moderator's announcement.</i></h5>
           {% else %}
-
+            
           {% endif %}
         </div>
         </div>

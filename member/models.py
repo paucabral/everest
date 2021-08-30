@@ -18,7 +18,8 @@ class EventRegistration(models.Model):
     event = models.ForeignKey(Event, null=True, on_delete=models.CASCADE)
     is_registration_approved = models.CharField(
         max_length=200, null=True, choices=APPROVAL)
-    time_of_attendance = models.DateTimeField(auto_now_add=False, null=True)
+    time_of_attendance = models.DateTimeField(
+        auto_now_add=False, null=True, blank=True)
 
     def __str__(self):
         return self.user.user.username + "+" + self.event.event_name

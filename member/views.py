@@ -58,7 +58,10 @@ class ViewEvent(View):
         user_registered_events_rejected = EventRegistration.objects.filter(
             user=user).filter(is_registration_approved='REJECTED').values_list('event_id', flat=True)
 
-        return render(request, template_name='member/event-details.html', context={'event': event, 'user_registered_events_approved': user_registered_events_approved, 'user_registered_events_pending': user_registered_events_pending, 'user_registered_events_rejected': user_registered_events_rejected, 'support_contacts_email': support_contacts_email, 'support_contacts_number': support_contacts_number})
+        user_confirmed_attendance = EventRegistration.objects.filter(
+            user=user).filter(event=event).exclude(time_of_attendance__isnull=True).values_list('event_id', flat=True)
+
+        return render(request, template_name='member/event-details.html', context={'event': event, 'user_registered_events_approved': user_registered_events_approved, 'user_registered_events_pending': user_registered_events_pending, 'user_registered_events_rejected': user_registered_events_rejected, 'support_contacts_email': support_contacts_email, 'support_contacts_number': support_contacts_number, 'user_confirmed_attendance': user_confirmed_attendance})
 
 
 @login_required(login_url='/')
