@@ -85,34 +85,43 @@ EVEREST | {{ event.event_name }}
         <div class="row row-eq-height container-fluid" style="align-items: center; text-align: center;">
           {% if event.is_registration_open and event.id in user_registered_events %}
             <div class="col container-fluid" style="align-items: center; text-align: center;">
-              <div class="form-group row my-3" style="margin-left: 1em; margin-right: 1em;">
-                <form class="col container-fluid" style="align-items: center; text-align: center;"
+              <div class="form-group col-md my-3" style="margin-left: 1em; margin-right: 1em;">
+                <form style="align-items: center; text-align: center;"
                   onsubmit="return confirm('Are you sure you want to unregister from the event: {{ event.event_name }}?');" method="POST"
                   action="{% url 'unregister-event' event.id  %}">{% csrf_token %}
-                  <button type="submit" class="btn btn-danger mb-2" style="font-weight: 800;">UNREGISTER</button><input type="hidden"
-                    name="q_id" value="{{i.id}}" />
+                  <button type="submit" class="btn btn-danger mb-2 form-control" style="font-weight: 800;">UNREGISTER</button>
                 </form>
               </div>
             </div>
           {% elif event.is_registration_open and event.id not in user_registered_events  %}
             <div class="col container-fluid" style="align-items: center; text-align: center;">
-              <div class="form-group row my-3" style="margin-left: 1em; margin-right: 1em;">
-                <form class="col container-fluid" style="align-items: center; text-align: center;"
+              <div class="form-group col-md my-3" style="margin-left: 1em; margin-right: 1em;">
+                <form style="align-items: center; text-align: center;"
                   onsubmit="return confirm('Confirm registration for the event: {{ event.event_name }}?');" method="POST"
                   action="{% url 'register-event' event.id  %}">{% csrf_token %}
-                  <button type="submit" class="btn btn-primary mb-2" style="font-weight: 800;">REGISTER</button><input type="hidden"
-                    name="q_id" value="{{i.id}}" />
+                  <button type="submit" class="btn btn-primary mb-2 form-control" style="font-weight: 800;">REGISTER</button>
                 </form>
               </div>
             </div>
           {% else %}
-            <h5><i>Registration not yet available.</i></h5>
+            <h5 class="mb-2"><i>Registration not yet available.</i></h5>
           {% endif %}
+          
+          {% if event.is_attendance_open and event.id in user_registered_events %}
           <div class="col container-fluid" style="align-items: center; text-align: center;">
-            <div class="form-group row my-3" style="margin-left: 1em; margin-right: 1em;">
-                <a href="#" class="btn btn-secondary mb-2" style="font-weight: 800;">PRESENT</a>
+            <div class="form-group col-md my-3" style="margin-left: 1em; margin-right: 1em;">
+              <form style="align-items: center; text-align: center;"
+                onsubmit="return confirm('Confirm registration for the event: {{ event.event_name }}?');" method="POST"
+                action="{% url 'register-event' event.id  %}">{% csrf_token %}
+                <button type="submit" class="btn btn-secondary mb-2 form-control" style="font-weight: 800;">CONFIRM ATTENDANCE</button>
+              </form>
             </div>
           </div>
+          {% elif event.is_attendance_open is False and event.id in user_registered_events %}
+            <h5 class="mb-2"><i>Check back later for attendance or wait for the moderator's announcement.</i></h5>
+          {% else %}
+
+          {% endif %}
         </div>
         </div>
 
