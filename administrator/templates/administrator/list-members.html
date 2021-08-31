@@ -71,7 +71,13 @@ EVEREST | List of Members
         <td>{{ member.last_name }}</td>
         <td>{{ member.first_name }}</td>
         <td>{{ member.username }}</td>
-        <td>TBA</td>
+        <td>
+          {% for event in registered_events %}
+            {% if event.user.id == member.profile.id %}
+              {{ event.event.event_name }}
+            {% endif %}
+          {% endfor %}
+        </td>
         <td>
           <a class="btn btn-interact btn-primary" href="#">Profile</a>
         </td>

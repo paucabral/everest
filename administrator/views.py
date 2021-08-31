@@ -9,6 +9,7 @@ from .forms import *
 from django.contrib import messages
 from accounts.models import Profile, User
 from django.db.models import Q
+from member.models import Event, EventRegistration
 
 # Create your views here.
 
@@ -100,9 +101,12 @@ class ListMembers(View):
     @method_decorator(login_required(login_url='/'))
     @method_decorator(admin_only())
     def get(self, request, *args, **kwargs):
+        registered_events = EventRegistration.objects.exclude(
+            time_of_attendance__isnull=True)
+
         members = User.objects.exclude(
             Q(is_superuser=True)).order_by('-last_name')
-        return render(request, template_name='administrator/list-members.html', context={'members': members})
+        return render(request, template_name='administrator/list-members.html', context={'members': members, 'registered_events': registered_events})
 
 
 @login_required(login_url='/')
