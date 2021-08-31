@@ -1,3 +1,4 @@
+from member.forms import EventRegistrationForm
 from django.core.exceptions import EmptyResultSet
 from django.shortcuts import render, redirect
 from django.views import View
@@ -147,8 +148,25 @@ class SetTransactionStatus(View):
         transaction_id = self.kwargs['transaction_id']
         transaction = EventRegistration.objects.get(pk=transaction_id)
 
-        return render(request, template_name='administrator/set-transaction-status.html', context={'transaction': transaction})
+        form = EventRegistrationForm(instance=transaction)
+
+        return render(request, template_name='administrator/set-transaction-status.html', context={'transaction': transaction, 'form': form})
 
     @method_decorator(login_required(login_url='/'))
     def post(self, request, *args, **kwargs):
-        pass
+        transaction_id = self.kwargs['transaction_id']
+        transaction = EventRegistration.objects.get(pk=transaction_id)
+
+        form = EventRegistrationForm(
+            request.POST, request.FILES, instance=transaction)
+        if form.is_valid():
+            form.save()
+
+            messages.add_message(request,
+                                 messages.SUCCESS,
+                                 'Transaction ID: {} was updated successfully.'.format(transaction_id))
+            return redirect('/administrator/transactions')
+        else:
+            messages.error(
+                request, 'Transaction ID: {} was not updated due to an error.'.format(transaction_id))
+            return redirect('/administrator/transactions')
