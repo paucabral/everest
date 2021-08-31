@@ -11,6 +11,7 @@ from django.contrib import messages
 from django.utils import timezone
 import datetime
 from .forms import EventRegistrationForm
+from member.models import Event, EventRegistration
 
 # Create your views here.
 
@@ -167,3 +168,17 @@ class EventsJoined(View):
         events = joined_events_filter.qs
 
         return render(request, template_name='member/events-joined.html', context={'events': events, 'user_registered_events': user_registered_events, 'joined_events_filter': joined_events_filter})
+
+
+class Transactions(View):
+    @method_decorator(login_required(login_url='/'))
+    def get(self, request, *args, **kwargs):
+        user = Profile.objects.get(id=request.user.profile.id)
+        transactions = EventRegistration.objects.filter(
+            user=user).order_by('-date_created')
+
+        transactions_filter = EventsJoinedFilter(
+            request.GET, queryset=transactions)
+        transactions = transactions_filter.qs
+
+        return render(request, template_name='member/transactions.html', context={'transactions': transactions, 'transactions_filter': transactions_filter})

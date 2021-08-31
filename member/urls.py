@@ -19,4 +19,6 @@ urlpatterns = [
          name='paid-registration'),
     path('events/joined', views.EventsJoined.as_view(),
          name='find-event'),
+    path('transactions', views.Transactions.as_view(),
+         name='transactions'),
 ]

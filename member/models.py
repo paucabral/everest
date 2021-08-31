@@ -21,6 +21,7 @@ class EventRegistration(models.Model):
         max_length=200, null=True, choices=APPROVAL)
     time_of_attendance = models.DateTimeField(
         auto_now_add=False, null=True, blank=True)
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
         return self.user.user.username + "+" + self.event.event_name
