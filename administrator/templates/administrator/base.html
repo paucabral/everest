@@ -206,7 +206,7 @@
     <div id="sidebar-wrapper">
       <br>
       <center>
-        <img class="profile-img my-auto" alt="{{ request.user.username }}" src="{% if request.user.profile.profile_pic %}{{ request.user.profile.profile_pic.url }}{% else %}https://icon-library.com/images/generic-user-icon/generic-user-icon-19.jpg{% endif %}" />
+        <img class="profile-img my-auto" alt="{{ request.user.username }}" src="{% if request.user.profile.profile_pic %}{{ request.user.profile.profile_pic.url }}{% else %}{% static 'img/default-profile-icon.jpg' %}{% endif %}" />
         <br>
         <br>
         <h4 style="color: #ddd; text-transform: uppercase;">{{ request.user.first_name }} {{ request.user.last_name }}</h4>
