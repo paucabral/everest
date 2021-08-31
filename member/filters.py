@@ -3,20 +3,24 @@ from django_filters import CharFilter, ChoiceFilter
 from .models import *
 from django import forms
 from administrator.models import *
+from django.db.models import Q
 
 
 class FindEventFilter(django_filters.FilterSet):
-    name = CharFilter(field_name='event_name', lookup_expr='icontains')
+    search_fields = CharFilter(method='custom_search_filter', label="Search")
 
     class Meta:
         model = Event
-        fields = '__all__'
-        exclude = ['event_name', 'short_description', 'detailed_description',
-                   'is_registration_open', 'is_attendance_open']
+        fields = ['search_fields', 'event_name', 'short_description', 'detailed_description',
+                  'is_registration_open', 'is_attendance_open', 'price', 'cost', 'event_type']
+
+    def custom_search_filter(self, queryset, name, value):
+        return Event.objects.filter(
+            Q(event_name__icontains=value) | Q(short_description__icontains=value) | Q(detailed_description__icontains=value))
 
 
 class EventsJoinedFilter(django_filters.FilterSet):
-    name = CharFilter(field_name='event__event_name', lookup_expr='icontains')
+    search_fields = CharFilter(method='custom_search_filter', label="Search")
     cost = ChoiceFilter(field_name='event__cost', choices=Event.EVENT_COST)
     event_type = ChoiceFilter(field_name='event__event_type',
                               choices=Event.EVENT_TYPE)
@@ -25,5 +29,9 @@ class EventsJoinedFilter(django_filters.FilterSet):
 
     class Meta:
         model = EventRegistration
-        fields = '__all__'
-        exclude = ['time_of_attendance', 'receipt']
+        fields = ['search_fields', 'user', 'event',
+                  'is_registration_approved', 'time_of_attendance']
+
+    def custom_search_filter(self, queryset, name, value):
+        return EventRegistration.objects.filter(
+            Q(event__event_name__icontains=value) | Q(event__short_description__icontains=value) | Q(event__detailed_description__icontains=value))

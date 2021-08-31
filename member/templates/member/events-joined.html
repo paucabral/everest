@@ -13,7 +13,7 @@ EVEREST | Events Joined
     <div class="container-fluid row" style="align-items: center; text-align: center;">
       <div class="form-group col-md-4">
         <label for="id_name">Keyword: </label>
-        {{ joined_events_filter.form.name }}
+        {{ joined_events_filter.form.search_fields }}
       </div>
 
       <div class="form-group col-md-2">
@@ -67,7 +67,7 @@ EVEREST | Events Joined
             </p>
             <br>
 
-            <a href="/member/events/event/{{ event.id }}" class="btn btn-details mb-2">MORE DETAILS</a>
+            <a href="/member/events/event/{{ event.event.id }}" class="btn btn-details mb-2">MORE DETAILS</a>
           </div>
         </div>
       </div>
