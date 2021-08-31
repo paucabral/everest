@@ -80,7 +80,11 @@ class ListEvents(View):
     @method_decorator(admin_only())
     def get(self, request, *args, **kwargs):
         events = Event.objects.all().order_by('-date')
-        return render(request, template_name='administrator/list-events.html', context={'events': events})
+
+        find_event_filter = FindEventFilter(request.GET, queryset=events)
+        events = find_event_filter.qs
+
+        return render(request, template_name='administrator/list-events.html', context={'events': events, 'find_event_filter': find_event_filter})
 
 
 @login_required(login_url='/')
