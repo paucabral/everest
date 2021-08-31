@@ -15,4 +15,5 @@ urlpatterns = [
          name='list-members'),
     path('members/delete/<int:member_id>',
          views.deleteMember, name='delete-member'),
+    path('transactions', views.AllTransactions.as_view(), name='all-transactions'),
 ]

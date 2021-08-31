@@ -10,6 +10,7 @@ from django.contrib import messages
 from accounts.models import Profile, User
 from django.db.models import Q
 from member.models import Event, EventRegistration
+from member.filters import FindEventFilter, EventsJoinedFilter
 
 # Create your views here.
 
@@ -122,3 +123,15 @@ def deleteMember(request, member_id):
         return redirect('/administrator/members/list')
 
     return redirect('/administrator/members/list')
+
+
+class AllTransactions(View):
+    @method_decorator(login_required(login_url='/'))
+    def get(self, request, *args, **kwargs):
+        transactions = EventRegistration.objects.all().order_by('-date_created')
+
+        transactions_filter = EventsJoinedFilter(
+            request.GET, queryset=transactions)
+        transactions = transactions_filter.qs
+
+        return render(request, template_name='administrator/transactions.html', context={'transactions': transactions, 'transactions_filter': transactions_filter})
