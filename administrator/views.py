@@ -139,3 +139,16 @@ class AllTransactions(View):
         transactions = transactions_filter.qs
 
         return render(request, template_name='administrator/transactions.html', context={'transactions': transactions, 'transactions_filter': transactions_filter})
+
+
+class SetTransactionStatus(View):
+    @method_decorator(login_required(login_url='/'))
+    def get(self, request, *args, **kwargs):
+        transaction_id = self.kwargs['transaction_id']
+        transaction = EventRegistration.objects.get(pk=transaction_id)
+
+        return render(request, template_name='administrator/set-transaction-status.html', context={'transaction': transaction})
+
+    @method_decorator(login_required(login_url='/'))
+    def post(self, request, *args, **kwargs):
+        pass

@@ -16,4 +16,6 @@ urlpatterns = [
     path('members/delete/<int:member_id>',
          views.deleteMember, name='delete-member'),
     path('transactions', views.AllTransactions.as_view(), name='all-transactions'),
+    path('transactions/transaction/set-status/<int:transaction_id>',
+         views.SetTransactionStatus.as_view(), name='set-transaction-status'),
 ]

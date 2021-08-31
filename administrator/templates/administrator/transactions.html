@@ -97,7 +97,10 @@ EVEREST | All Transactions
             class="{% if transaction.is_registration_approved == 'APPROVED' %}bg-success{% elif transaction.is_registration_approved == 'PENDING' %}bg-primary{% else %}bg-danger{% endif %}"
             style="text-align: center; color: white;">{{ transaction.is_registration_approved }}</td>
           <td>
-            <a class="btn btn-interact btn-secondary" href="#">SET STATUS</a>
+            {% if transaction.event.cost == "PAID" %}
+            <a class="btn btn-interact btn-secondary"
+              href="/administrator/transactions/transaction/set-status/{{ transaction.id }}">SET STATUS</a>
+            {% endif %}
           </td>
         </tr>
         {% endfor %}

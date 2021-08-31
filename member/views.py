@@ -127,14 +127,13 @@ class PaidRegistration(View):
         event_id = self.kwargs['event_id']
         event = Event.objects.get(pk=event_id)
         user = Profile.objects.get(id=request.user.profile.id)
-        approval = "PENDING"
 
         form = EventRegistrationForm()
 
         user_registered_event = EventRegistration.objects.filter(
             user=user).filter(event=event_id).values_list('event_id', flat=True)
 
-        return render(request, template_name='member/paid-registration-form.html', context={'form': form, 'user_registered_event': user_registered_event, 'user': user, 'event': event, 'approval': approval})
+        return render(request, template_name='member/paid-registration-form.html', context={'form': form, 'user_registered_event': user_registered_event, 'user': user, 'event': event})
 
     @method_decorator(login_required(login_url='/'))
     def post(self, request, *args, **kwargs):
@@ -143,12 +142,11 @@ class PaidRegistration(View):
         user = Profile.objects.get(id=request.user.profile.id)
         approval = "PENDING"
 
-        form = EventRegistrationForm(request.POST)
-        form_instance = form.instance
-        form_instance.event = event
-        form_instance.user = user
-        form_instance.is_registration_approved = approval
-        form_instance.save()
+        receipt = request.FILES['receipt']
+
+        event_reg = EventRegistration.objects.create(
+            user=user, receipt=receipt, event=event, is_registration_approved=approval)
+        event_reg.save()
 
         messages.add_message(request,
                              messages.SUCCESS,
