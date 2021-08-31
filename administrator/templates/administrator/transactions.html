@@ -117,21 +117,33 @@ EVEREST | All Transactions
           extend: 'csv',
           text: 'CSV',
           className: 'btn btn-default',
+          exportOptions: {
+            columns: 'th:not(:nth-last-child(-n + 1))'
+          }
         },
         {
           extend: 'excel',
           text: 'Excel',
           className: 'btn btn-default',
+          exportOptions: {
+            columns: 'th:not(:nth-last-child(-n + 1))'
+          }
         },
         {
           extend: 'pdf',
           text: 'PDF',
           className: 'btn btn-default',
+          exportOptions: {
+            columns: 'th:not(:nth-last-child(-n + 1))'
+          }
         },
         {
           extend: 'print',
           text: 'Print',
           className: 'btn btn-default',
+          exportOptions: {
+            columns: 'th:not(:nth-last-child(-n + 1))'
+          }
         },
       ],
       "lengthMenu": [[5, 10, 50, -1], [5, 10, 50, "All"]],
