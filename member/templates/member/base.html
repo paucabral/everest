@@ -178,7 +178,7 @@
         <div class="collapse navbar-collapse align-items-center" id="navbarTogglerDemo02">
           <ul class="nav navbar-nav ms-auto align-items-center">
             <li class="nav-item">
-              <a class="nav-link menuItem" href="/">
+              <a class="nav-link menuItem" href="/profile">
                 <img class="nav-profile-img my-auto" alt="{{ request.user.username }}"
                   src="{% if request.user.profile.profile_pic %}{{ request.user.profile.profile_pic.url }}{% else %}{% static 'img/default-profile-icon.jpg' %}{% endif %}" /> {{ request.user.username }}
               </a>

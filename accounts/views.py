@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.http import HttpResponse
-from .forms import CreateUserForm
+from .forms import CreateUserForm, ProfileForm
 from .models import *
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
@@ -66,3 +66,43 @@ class RegistrationSuccess(View):
     @method_decorator(unauthenticated_user)
     def get(self, request, *args, **kwargs):
         return render(request, template_name='accounts/registration-success.html', context={})
+
+
+class AccountProfile(View):
+    @method_decorator(login_required(login_url='/'))
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        profile = Profile.objects.get(user=user)
+
+        form = ProfileForm(instance=profile)
+
+        return render(request, template_name='accounts/profile.html', context={'form': form})
+
+    @method_decorator(login_required(login_url='/'))
+    def post(self, request, *args, **kwargs):
+        user = request.user
+        user_instance = Profile.objects.get(user=user)
+        account_instance = User.objects.get(id=user.id)
+
+        form = ProfileForm(request.POST, request.FILES, instance=user_instance)
+
+        if form.is_valid():
+            form.save()
+
+            first_name = request.POST["first_name"]
+            last_name = request.POST["last_name"]
+            email = request.POST["email"]
+            username = request.POST["username"]
+
+            account_instance.first_name = first_name
+            account_instance.last_name = last_name
+            account_instance.email = email
+            account_instance.username = username
+
+            account_instance.save()
+
+            return redirect("/profile")
+
+        else:
+            messages.error(request, 'There was an error.')
+        return redirect("/profile")
