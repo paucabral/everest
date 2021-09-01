@@ -22,6 +22,16 @@ EVEREST | All Transactions
   #id_approval {
     width: 7em !important;
   }
+
+  .underline-only-link {
+    color: black;
+    text-decoration: none;
+  }
+
+  .underline-only-link:hover {
+    color: black;
+    text-decoration: underline;
+  }
 </style>
 
 <main class="container-fluid mx-2">
@@ -120,10 +130,9 @@ EVEREST | All Transactions
         {% for transaction in transactions %}
         <tr>
           <td>{{ transaction.id }}</td>
-          <td>{{ transaction.user.user.last_name }}, {{ transaction.user.user.first_name }}</td>
-          <td><a style="text-decoration: none; color: black; font-weight: bold;"
-              href="/member/events/event/{{ transaction.event.id }}">{{ transaction.event.event_name }}</a></td>
-          <td>{{ transaction.date_created }}</td>
+          <td><a href="/administrator/members/member/{{ transaction.user.user.id }}/profile" class="underline-only-link">{{ transaction.user.user.last_name }}, {{ transaction.user.user.first_name }}</a></td>
+          <td><a class="underline-only-link" href="/member/events/event/{{ transaction.event.id }}">{{ transaction.event.event_name }}</a></td>
+          <td style="text-transform: uppercase;">{{ transaction.date_created }}</td>
           <td>{{ transaction.event.short_description }}</td>
           <td
             class="{% if transaction.is_registration_approved == 'APPROVED' %}bg-success{% elif transaction.is_registration_approved == 'PENDING' %}bg-primary{% else %}bg-danger{% endif %}"

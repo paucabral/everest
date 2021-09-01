@@ -20,4 +20,6 @@ urlpatterns = [
          views.SetTransactionStatus.as_view(), name='set-transaction-status'),
     path('events/event/<int:event_id>/reports',
          views.EventReports.as_view(), name='event-reports'),
+    path('members/member/<int:member_id>/profile',
+         views.MemberProfile.as_view(), name='member-profile'),
 ]

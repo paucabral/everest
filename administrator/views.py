@@ -1,3 +1,4 @@
+from member.views import Transactions
 from member.forms import EventRegistrationForm
 from django.core.exceptions import EmptyResultSet
 from django.shortcuts import render, redirect
@@ -195,3 +196,21 @@ class EventReports(View):
         user_registered_events = transactions_filter.qs
 
         return render(request, template_name='administrator/event-reports.html', context={'transactions_filter': transactions_filter, 'user_registered_events': user_registered_events, 'event': event, 'user_registered_events_approved': user_registered_events_approved, 'user_registered_events_pending': user_registered_events_pending, 'user_registered_events_rejected': user_registered_events_rejected, 'user_confirmed_attendance': user_confirmed_attendance})
+
+
+class MemberProfile(View):
+    @method_decorator(login_required(login_url='/'))
+    def get(self, request, *args, **kwargs):
+        user = self.kwargs['member_id']
+        profile = Profile.objects.get(user=user)
+
+        user_attended_events = EventRegistration.objects.filter(
+            user=profile).exclude(time_of_attendance__isnull=True)
+
+        transactions = EventRegistration.objects.filter(user=profile)
+
+        return render(request, template_name='administrator/user-profile.html', context={'profile': profile, 'user_attended_events': user_attended_events, 'transactions': transactions})
+
+    @method_decorator(login_required(login_url='/'))
+    def post(self, request, *args, **kwargs):
+        pass

@@ -166,7 +166,7 @@ EVEREST | {{ event.event_name }} Reports
             <td
               class="{% if event.is_registration_approved == 'APPROVED' %}bg-success{% elif transaction.is_registration_approved == 'PENDING' %}bg-primary{% else %}bg-danger{% endif %}"
               style="text-align: center; color: white;">{{ event.is_registration_approved }}</td>
-            <td>
+            <td style="text-transform: uppercase;">
               {% if event.time_of_attendance %}
                 {{ event.time_of_attendance }}
               {% else %}
@@ -174,7 +174,7 @@ EVEREST | {{ event.event_name }} Reports
               {% endif  %}
             </td>
             <td>
-              <a class="btn btn-interact btn-primary" href="#">Profile</a>
+              <a class="btn btn-interact btn-primary" href="/administrator/members/member/{{ event.user.user.id }}/profile">Profile</a>
             </td>
           </tr>
           {% endfor %}
