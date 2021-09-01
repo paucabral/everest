@@ -87,10 +87,10 @@ EVEREST | List of Events
         <td>{{ event.date }}</td>
         <td>{{ event.short_description }}</td>
         <td>
-          <a class="btn btn-interact btn-primary" href="#">Attendees</a>
+          <a class="btn btn-interact btn-primary" href="/administrator/events/event/{{ event.id }}/reports">Reports</a>
         </td>
         <td>
-          <a class="btn btn-interact btn-warning" href="/administrator/events/update/{{event.id}}/"><span
+          <a class="btn btn-interact btn-warning" href="/administrator/events/update/{{event.id}}"><span
               style="color:white;">Update</span></a>
         </td>
         <td>

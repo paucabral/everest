@@ -18,4 +18,6 @@ urlpatterns = [
     path('transactions', views.AllTransactions.as_view(), name='all-transactions'),
     path('transactions/transaction/set-status/<int:transaction_id>',
          views.SetTransactionStatus.as_view(), name='set-transaction-status'),
+    path('events/event/<int:event_id>/reports',
+         views.EventReports.as_view(), name='event-reports'),
 ]

@@ -69,7 +69,7 @@ class UpdateEvent(View):
             messages.add_message(request,
                                  messages.SUCCESS,
                                  'The event was updated successfully.')
-            return redirect('/administrator/events/list')
+            return redirect('/administrator/events/event/{}/reports'.format(event_id))
         else:
             messages.error(
                 request, 'The event was not updated due to an error.')
@@ -170,3 +170,28 @@ class SetTransactionStatus(View):
             messages.error(
                 request, 'Transaction ID: {} was not updated due to an error.'.format(transaction_id))
             return redirect('/administrator/transactions')
+
+
+class EventReports(View):
+    @method_decorator(login_required(login_url='/'))
+    def get(self, request, *args, **kwargs):
+        event_id = self.kwargs['event_id']
+        event = Event.objects.get(pk=event_id)
+
+        user_registered_events = EventRegistration.objects.filter(event=event)
+
+        user_registered_events_approved = EventRegistration.objects.filter(
+            is_registration_approved='APPROVED')
+        user_registered_events_pending = EventRegistration.objects.filter(
+            is_registration_approved='PENDING')
+        user_registered_events_rejected = EventRegistration.objects.filter(
+            is_registration_approved='REJECTED')
+
+        user_confirmed_attendance = EventRegistration.objects.filter(event=event).exclude(
+            time_of_attendance__isnull=True).values_list('event_id', flat=True)
+
+        transactions_filter = EventsJoinedFilter(
+            request.GET, queryset=user_registered_events)
+        user_registered_events = transactions_filter.qs
+
+        return render(request, template_name='administrator/event-reports.html', context={'transactions_filter': transactions_filter, 'user_registered_events': user_registered_events, 'event': event, 'user_registered_events_approved': user_registered_events_approved, 'user_registered_events_pending': user_registered_events_pending, 'user_registered_events_rejected': user_registered_events_rejected, 'user_confirmed_attendance': user_confirmed_attendance})
