@@ -122,7 +122,7 @@ EVEREST | {{ event.event_name }} Reports
           </div>
     
           <div class="form-group col-md" style="align-items: center; text-align: center;">
-            <label for="id_event_type">Status: </label>
+            <label for="id_event_type">Registration Status: </label>
             {{ transactions_filter.form.approval }}
           </div>
     
@@ -167,7 +167,11 @@ EVEREST | {{ event.event_name }} Reports
               class="{% if event.is_registration_approved == 'APPROVED' %}bg-success{% elif transaction.is_registration_approved == 'PENDING' %}bg-primary{% else %}bg-danger{% endif %}"
               style="text-align: center; color: white;">{{ event.is_registration_approved }}</td>
             <td>
-              {{ event.time_of_attendance }}
+              {% if event.time_of_attendance %}
+                {{ event.time_of_attendance }}
+              {% else %}
+                N/A
+              {% endif  %}
             </td>
             <td>
               <a class="btn btn-interact btn-primary" href="#">Profile</a>
