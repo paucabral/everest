@@ -101,8 +101,13 @@ class AccountProfile(View):
 
             account_instance.save()
 
+            messages.add_message(request,
+                                 messages.SUCCESS,
+                                 'Your profile information was saved successfully.')
+
             return redirect("/profile")
 
         else:
-            messages.error(request, 'There was an error.')
+            messages.error(
+                request, 'There was an error saving in your profile information.')
         return redirect("/profile")
