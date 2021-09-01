@@ -58,9 +58,9 @@ EVEREST | Events Joined
 
   <section class="container container-fluid">
     <div class="row">
-      {% for event in events %}
+      {% for event in user_registered_events %}
 
-      {% if event.event.id in user_registered_events %}
+      
       <div class="col container-fluid col-md-4 my-2">
         <div
           class="shadow mb-5 card card-item-event {% if event.event.event_type == 'CONFERENCE' %}card-header-conference{% elif event.event.event_type == 'SEMINAR' %}card-header-seminar{% else %}card-header-workshop{% endif %}"
@@ -84,7 +84,7 @@ EVEREST | Events Joined
           </div>
         </div>
       </div>
-      {% endif %}
+     
 
       {% endfor %}
     </div>

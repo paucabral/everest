@@ -157,15 +157,14 @@ class PaidRegistration(View):
 class EventsJoined(View):
     @method_decorator(login_required(login_url='/'))
     def get(self, request, *args, **kwargs):
-        events = EventRegistration.objects.all().order_by('event__date')
         user = Profile.objects.get(id=request.user.profile.id)
-        user_registered_events = EventRegistration.objects.filter(
-            user=user).values_list('event_id', flat=True)
+        user_registered_events = EventRegistration.objects.filter(user=user)
 
-        joined_events_filter = EventsJoinedFilter(request.GET, queryset=events)
-        events = joined_events_filter.qs
+        joined_events_filter = EventsJoinedFilter(
+            request.GET, queryset=user_registered_events)
+        user_registered_events = joined_events_filter.qs
 
-        return render(request, template_name='member/events-joined.html', context={'events': events, 'user_registered_events': user_registered_events, 'joined_events_filter': joined_events_filter})
+        return render(request, template_name='member/events-joined.html', context={'user_registered_events': user_registered_events, 'joined_events_filter': joined_events_filter})
 
 
 class Transactions(View):
