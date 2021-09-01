@@ -1,5 +1,6 @@
+from django.forms.fields import NullBooleanField
 import django_filters
-from django_filters import CharFilter, ChoiceFilter
+from django_filters import CharFilter, ChoiceFilter, ModelChoiceFilter
 from .models import *
 from django import forms
 from administrator.models import *
@@ -27,9 +28,20 @@ class EventsJoinedFilter(django_filters.FilterSet):
     approval = ChoiceFilter(field_name='is_registration_approved',
                             choices=EventRegistration.APPROVAL)
 
+    attendance = ModelChoiceFilter(
+        field_name='time_of_attendance', lookup_expr='isnull',
+        null_label='ABSENT',
+        queryset=EventRegistration.objects.all(),
+    )
+
+    CHOICES = (('', '-------'),
+               (True, 'PRESENT'), (False, 'ABSENT'))
+    attendance_bool = django_filters.BooleanFilter(
+        field_name='time_of_attendance', lookup_expr='isnull', exclude=True, widget=forms.Select(choices=CHOICES))
+
     class Meta:
         model = EventRegistration
-        fields = ['search_fields', 'user', 'event',
+        fields = ['attendance_bool', 'attendance', 'search_fields', 'user', 'event',
                   'is_registration_approved', 'time_of_attendance']
 
     def custom_search_filter(self, queryset, name, value):

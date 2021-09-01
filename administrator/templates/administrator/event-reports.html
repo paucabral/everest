@@ -105,85 +105,80 @@ EVEREST | {{ event.event_name }} Reports
 
       </div>
     </div>
-  </div>
 
-  <section>
-
-    <section class="container container-fluid">
-      <h3 class="text-center" style="font-weight: bold;">REGISTRATION AND ATTENDANCE</h3>
-      <hr class="my-4">
-    </section>
-
-    <form method="GET" class="form-control container-fluid mb-2 p-3" style="border: none;">
-      <div class="container-fluid row" style="align-items: center; text-align: center;">
+    <section>
     
-        <div class="form-group col-md" style="align-items: center; text-align: center;">
-          <label for="id_event_type">Attendance: </label>
-          {{ transactions_filter.form.time_of_attendance }}
-        </div>
+      <section class="container container-fluid">
+        <h3 class="text-center" style="font-weight: bold;">REGISTRATION AND ATTENDANCE</h3>
+        <hr class="my-4">
+      </section>
     
-        <div class="form-group col-md" style="align-items: center; text-align: center;">
-          <label for="id_event_type">Status: </label>
-          {{ transactions_filter.form.approval }}
-        </div>
+      <form method="GET" class="form-control container-fluid mb-2 p-3" style="border: none;">
+        <div class="container-fluid row" style="align-items: center; text-align: center;">
     
-        <div class="form-group col container">
-          <button class="btn btn-secondary"
-            style="font-weight: bold; background-color: rgba(34, 166, 170, 0.918); border: none;"
-            type="submit">FILTER</button>
+          <div class="form-group col-md" style="align-items: center; text-align: center;">
+            <label for="id_event_type">Attendance: </label>
+            {{ transactions_filter.form.attendance_bool }}
+          </div>
+    
+          <div class="form-group col-md" style="align-items: center; text-align: center;">
+            <label for="id_event_type">Status: </label>
+            {{ transactions_filter.form.approval }}
+          </div>
+    
+          <div class="form-group col container">
+            <button class="btn btn-secondary"
+              style="font-weight: bold; background-color: rgba(34, 166, 170, 0.918); border: none;"
+              type="submit">FILTER</button>
+          </div>
         </div>
+      </form>
+    
+      <div class="container-fluid">
+        <table id="qlist" style="width: 100%;">
+          <thead>
+            <th>
+    
+            </th>
+            <th>
+              LAST NAME
+            </th>
+            <th>
+              FIRST NAME
+            </th>
+            <th>
+              REGISTRATION STATUS
+            </th>
+            <th>
+              ATTENDANCE
+            </th>
+            <th></th>
+          </thead>
+    
+          {% for event in user_registered_events %}
+          <tr>
+            <td><img class="profile-img my-auto" alt="{{ request.user.username }}"
+                style="min-width: 3rem !important; min-height: 3rem !important;"
+                src="{% if member.profile.profile_pic %}{{ member.profile.profile_pic.url }}{% else %}https://icon-library.com/images/generic-user-icon/generic-user-icon-19.jpg{% endif %}" />
+            </td>
+            <td>{{ event.user.user.last_name }}</td>
+            <td>{{ event.user.user.first_name }}</td>
+            <td
+              class="{% if event.is_registration_approved == 'APPROVED' %}bg-success{% elif transaction.is_registration_approved == 'PENDING' %}bg-primary{% else %}bg-danger{% endif %}"
+              style="text-align: center; color: white;">{{ event.is_registration_approved }}</td>
+            <td>
+              {{ event.time_of_attendance }}
+            </td>
+            <td>
+              <a class="btn btn-interact btn-primary" href="#">Profile</a>
+            </td>
+          </tr>
+          {% endfor %}
+    
+        </table>
       </div>
-    </form>
-
-    <div class="container-fluid mx-2">
-      <table id="qlist" style="width: 100%;">
-        <thead>
-          <th>
-    
-          </th>
-          <th>
-            LAST NAME
-          </th>
-          <th>
-            FIRST NAME
-          </th>
-          <th>
-            REGISTRATION STATUS
-          </th>
-          <th>
-            ATTENDANCE
-          </th>
-          <th></th>
-        </thead>
-    
-        {% for event in user_registered_events %}
-        <tr>
-          <td><img class="profile-img my-auto" alt="{{ request.user.username }}" style="min-width: 3rem !important; min-height: 3rem !important;"
-              src="{% if member.profile.profile_pic %}{{ member.profile.profile_pic.url }}{% else %}https://icon-library.com/images/generic-user-icon/generic-user-icon-19.jpg{% endif %}" />
-          </td>
-          <td>{{ event.user.user.last_name }}</td>
-          <td>{{ event.user.user.first_name }}</td>
-          <td
-            class="{% if event.is_registration_approved == 'APPROVED' %}bg-success{% elif transaction.is_registration_approved == 'PENDING' %}bg-primary{% else %}bg-danger{% endif %}"
-            style="text-align: center; color: white;">{{ event.is_registration_approved }}</td>
-          <td>
-            <ul class="list-group">
-              {% for event in registered_events %}
-              {% if event.user.id == member.profile.id %}
-              <li class="list-group-item">{{ event.event.event_name }}</li>
-              {% endif %}
-              {% endfor %}
-            </ul>
-          </td>
-          <td>
-            <a class="btn btn-interact btn-primary" href="#">Profile</a>
-          </td>
-        </tr>
-        {% endfor %}
-    
-      </table>
-    </div>
-  </section>
+    </section>
+  </div>
 
 </main>
 
