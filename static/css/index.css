@@ -40,8 +40,8 @@ img {
 }
 
 .nav-profile-img {
-  width: 2rem;
-  height: 2rem;
+  width: 2rem !important;
+  height: 2rem !important;
   object-fit: cover;
   border-radius: 50%;
   align-self: center;
