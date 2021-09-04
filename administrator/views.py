@@ -13,6 +13,8 @@ from accounts.models import Profile, User
 from django.db.models import Q
 from member.models import Event, EventRegistration
 from member.filters import FindEventFilter, EventsJoinedFilter
+import datetime
+from datetime import timedelta
 
 # Create your views here.
 
@@ -27,9 +29,23 @@ class AdministratorDashboard(View):
             is_registration_approved='PENDING').count()
         rejected = EventRegistration.objects.filter(
             is_registration_approved='REJECTED').count()
-        recent = EventRegistration.objects.order_by('-date_created')[:5]
+        recent = EventRegistration.objects.order_by('-date_created')[:10]
 
-        return render(request, template_name='administrator/dashboard.html', context={'approved': approved, 'pending': pending, 'rejected': rejected, 'recent': recent})
+        today_min = datetime.datetime.combine(
+            datetime.date.today(), datetime.time.min)
+        today_max = datetime.datetime.combine(
+            datetime.date.today(), datetime.time.max)
+        today = Event.objects.filter(
+            date__range=(today_min, today_max))
+
+        this_day = datetime.datetime.today()
+        upcoming = Event.objects.filter(date__gte=this_day)
+
+        how_many_days = 15
+        previous = Event.objects.filter(date__gte=datetime.datetime.now() -
+                                        timedelta(days=how_many_days)).exclude(date__range=(today_min, today_max))
+
+        return render(request, template_name='administrator/dashboard.html', context={'approved': approved, 'pending': pending, 'rejected': rejected, 'recent': recent, 'today': today, 'upcoming': upcoming, 'previous': previous})
 
 
 class CreateEvent(View):
