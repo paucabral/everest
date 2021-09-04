@@ -35,3 +35,17 @@ class EventForm(ModelForm):
             {'class': 'form-control', 'onchange': 'displayDivDemo(this)'})
         self.fields['price'].widget.attrs.update(
             {'class': 'form-control', })
+
+
+class ContactForm(ModelForm):
+    class Meta:
+        model = SupportContact
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(ContactForm, self).__init__(*args, **kwargs)
+
+        self.fields['contact_type'].widget.attrs.update(
+            {'class': 'form-control', 'required': 'required'})
+        self.fields['support_contact'].widget.attrs.update(
+            {'class': 'form-control', 'required': 'required'})

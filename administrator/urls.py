@@ -22,4 +22,8 @@ urlpatterns = [
          views.EventReports.as_view(), name='event-reports'),
     path('members/member/<int:member_id>/profile',
          views.MemberProfile.as_view(), name='member-profile'),
+    path('support-contacts', views.SupportContacts.as_view(),
+         name='list-members'),
+    path('support-contact/delete/<int:contact_id>',
+         views.deleteContact, name='delete-contact'),
 ]

@@ -210,3 +210,45 @@ class MemberProfile(View):
         transactions = EventRegistration.objects.filter(user=profile)
 
         return render(request, template_name='administrator/user-profile.html', context={'profile': profile, 'user_attended_events': user_attended_events, 'transactions': transactions})
+
+
+class SupportContacts(View):
+    @method_decorator(login_required(login_url='/'))
+    @method_decorator(admin_only())
+    def get(self, request, *args, **kwargs):
+        support_contacts = SupportContact.objects.all()
+        support_contact_submit = ContactForm()
+        return render(request, template_name='administrator/support-contacts.html', context={'support_contacts': support_contacts, 'support_contact_submit': support_contact_submit})
+
+    @method_decorator(login_required(login_url='/'))
+    @method_decorator(admin_only())
+    def post(self, request, *args, **kwargs):
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request,
+                                 messages.SUCCESS,
+                                 'The contact information was added successfully.')
+            return redirect("/administrator/support-contacts")
+
+        else:
+            messages.add_message(request,
+                                 messages.ERROR,
+                                 'There was error in adding the submitted contact information.')
+
+        return redirect("/administrator/support-contacts")
+
+
+@login_required(login_url='/')
+@admin_only()
+def deleteContact(request, contact_id):
+    if request.method == "POST":
+        contact = SupportContact.objects.filter(id=contact_id)
+        contact.delete()
+
+        messages.add_message(request,
+                             messages.SUCCESS,
+                             'The contact information was deleted successfully.')
+        return redirect('/administrator/support-contacts')
+
+    return redirect('/administrator/support-contacts')
