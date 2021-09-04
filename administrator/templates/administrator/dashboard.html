@@ -39,7 +39,49 @@ EVEREST | ADMIN: {{ request.user.username }}
     {% endif %}
   {% endfor %}
   <!-- end Popup -->
+  
+  <!-- transactions cards -->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col container-fluid">
+        <div class="card text-white bg-success mb-3">
+          <div class="card-header">
+            <h6 class="card-title" style="font-weight: bold; text-transform: uppercase;">Approved Transactions</h6>
+          </div>
+          <div class="card-body d-flex">
+            <i class="fas fa-clipboard-check fa-3x"></i>
+            <h5 class="card-title" style="font-size: 3rem; margin-left: 1rem;">{{ approved }}</h5>
+          </div>
+        </div>
+      </div>
 
+      <div class="col container-fluid">
+        <div class="card text-white bg-primary mb-3">
+          <div class="card-header">
+            <h6 class="card-title" style="font-weight: bold; text-transform: uppercase;">Pending Transactions</h6>
+          </div>
+          <div class="card-body d-flex">
+            <i class="fas fa-receipt fa-3x"></i>
+            <h5 class="card-title" style="font-size: 3rem; margin-left: 1rem;">{{ pending }}</h5>
+          </div>
+        </div>
+      </div>
+
+      <div class="col container-fluid">
+        <div class="card text-white bg-danger mb-3">
+          <div class="card-header">
+            <h6 class="card-title" style="font-weight: bold; text-transform: uppercase;">Rejected Transactions</h6>
+          </div>
+          <div class="card-body d-flex">
+            <i class="fas fa-ban fa-3x"></i>
+            <h5 class="card-title" style="font-size: 3rem; margin-left: 1rem;">{{ rejected }}</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end transactions cards -->
+  
 </main>
 
 

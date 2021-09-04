@@ -21,7 +21,14 @@ class AdministratorDashboard(View):
     @method_decorator(login_required(login_url='/'))
     @method_decorator(admin_only())
     def get(self, request, *args, **kwargs):
-        return render(request, template_name='administrator/dashboard.html', context={})
+        approved = EventRegistration.objects.filter(
+            is_registration_approved='APPROVED').count()
+        pending = EventRegistration.objects.filter(
+            is_registration_approved='PENDING').count()
+        rejected = EventRegistration.objects.filter(
+            is_registration_approved='REJECTED').count()
+
+        return render(request, template_name='administrator/dashboard.html', context={'approved': approved, 'pending': pending, 'rejected': rejected})
 
 
 class CreateEvent(View):
