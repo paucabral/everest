@@ -1,13 +1,14 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.http import HttpResponse
-from .forms import CreateUserForm, ProfileForm
+from .forms import CreateUserForm, ProfileForm, CreateSuperUserForm
 from .models import *
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.contrib.auth.hashers import make_password
 from .decorators import *
 
 # Create your views here.
@@ -111,3 +112,55 @@ class AccountProfile(View):
             messages.error(
                 request, 'There was an error saving in your profile information.')
         return redirect("/profile")
+
+
+class AdminRegisterSuperuser(View):
+    @method_decorator(login_required(login_url='/'))
+    @method_decorator(admin_only())
+    def get(self, request, *args, **kwargs):
+        tmp_password = make_password('')
+        form = CreateSuperUserForm(
+            initial={'password1': tmp_password, 'password2': tmp_password, 'is_superuser': True, 'is_staff': True})
+        form.fields['password1'].widget.render_value = True
+        form.fields['password2'].widget.render_value = True
+        form.fields['is_superuser'].widget.render_value = True
+        form.fields['is_staff'].widget.render_value = True
+
+        staffs = User.objects.filter(is_superuser=True).filter(is_staff=True)
+
+        return render(request, template_name='accounts/admin-register-staff-account.html', context={'form': form, 'staffs': staffs})
+
+    @method_decorator(login_required(login_url='/'))
+    @method_decorator(admin_only())
+    def post(self, request, *args, **kwargs):
+        form = CreateSuperUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+
+            profile = Profile(user=user)
+            profile.save()
+
+            messages.add_message(request,
+                                 messages.SUCCESS,
+                                 'The administrator account was registered successfully.')
+            return redirect("/administrator/staff")
+        else:
+            messages.add_message(request,
+                                 messages.ERROR,
+                                 'There was an error in creating the account.')
+        return redirect("/administrator/staff")
+
+
+@login_required(login_url='/')
+@admin_only()
+def deleteStaff(request, staff_id):
+    if request.method == "POST":
+        user = User.objects.filter(id=staff_id)
+        user.delete()
+
+        messages.add_message(request,
+                             messages.SUCCESS,
+                             'The administrator account was deleted successfully.')
+        return redirect('/administrator/staff')
+
+    return redirect('/administrator/staff')

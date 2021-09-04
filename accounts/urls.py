@@ -16,5 +16,9 @@ urlpatterns = [
         template_name="accounts/reset-password-confirm.html"), name="password_reset_confirm"),
     path('reset-password-complete/', auth_views.PasswordResetCompleteView.as_view(
         template_name="accounts/reset-password-complete.html"), name="password_reset_complete"),
-    path('profile/', views.AccountProfile.as_view(), name='profile')
+    path('profile/', views.AccountProfile.as_view(), name='profile'),
+    path('administrator/staff/', views.AdminRegisterSuperuser.as_view(),
+         name='admin-staff'),
+    path('staff/delete/<int:staff_id>',
+         views.deleteStaff, name='delete-staff'),
 ]

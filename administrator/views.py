@@ -210,7 +210,3 @@ class MemberProfile(View):
         transactions = EventRegistration.objects.filter(user=profile)
 
         return render(request, template_name='administrator/user-profile.html', context={'profile': profile, 'user_attended_events': user_attended_events, 'transactions': transactions})
-
-    @method_decorator(login_required(login_url='/'))
-    def post(self, request, *args, **kwargs):
-        pass

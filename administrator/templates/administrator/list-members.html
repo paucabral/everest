@@ -66,7 +66,7 @@ EVEREST | List of Members
       {% for member in members %}
       <tr>
         <td><img class="profile-img my-auto" alt="{{ request.user.username }}"
-          src="{% if member.profile.profile_pic %}{{ member.profile.profile_pic.url }}{% else %}https://icon-library.com/images/generic-user-icon/generic-user-icon-19.jpg{% endif %}" /></td>
+          src="{% if member.profile.profile_pic %}{{ member.profile.profile_pic.url }}{% else %}{% static 'img/default-profile-icon.jpg' %}{% endif %}" /></td>
         <td>{{ member.last_name }}</td>
         <td>{{ member.first_name }}</td>
         <td>{{ member.username }}</td>
