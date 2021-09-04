@@ -48,10 +48,10 @@ EVEREST | List of Members
           
         </th>
         <th>
-          LAST NAME
+          FIRST NAME
         </th>
         <th>
-          FIRST NAME
+          LAST NAME
         </th>
         <th>
           USERNAME
@@ -67,8 +67,8 @@ EVEREST | List of Members
       <tr>
         <td><img class="profile-img my-auto" alt="{{ request.user.username }}"
           src="{% if member.profile.profile_pic %}{{ member.profile.profile_pic.url }}{% else %}{% static 'img/default-profile-icon.jpg' %}{% endif %}" /></td>
-        <td>{{ member.last_name }}</td>
         <td>{{ member.first_name }}</td>
+        <td>{{ member.last_name }}</td>
         <td>{{ member.username }}</td>
         <td>
           <ul class="list-group">

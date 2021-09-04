@@ -27,8 +27,9 @@ class AdministratorDashboard(View):
             is_registration_approved='PENDING').count()
         rejected = EventRegistration.objects.filter(
             is_registration_approved='REJECTED').count()
+        recent = EventRegistration.objects.order_by('-date_created')[:5]
 
-        return render(request, template_name='administrator/dashboard.html', context={'approved': approved, 'pending': pending, 'rejected': rejected})
+        return render(request, template_name='administrator/dashboard.html', context={'approved': approved, 'pending': pending, 'rejected': rejected, 'recent': recent})
 
 
 class CreateEvent(View):
@@ -119,7 +120,7 @@ class ListMembers(View):
             time_of_attendance__isnull=True)
 
         members = User.objects.exclude(
-            Q(is_superuser=True)).order_by('-last_name')
+            Q(is_superuser=True)).order_by('first_name')
         return render(request, template_name='administrator/list-members.html', context={'members': members, 'registered_events': registered_events})
 
 

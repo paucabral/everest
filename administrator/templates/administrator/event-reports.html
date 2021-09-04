@@ -141,10 +141,10 @@ EVEREST | {{ event.event_name }} Reports
     
             </th>
             <th>
-              LAST NAME
+              FIRST NAME
             </th>
             <th>
-              FIRST NAME
+              LAST NAME
             </th>
             <th>
               REGISTRATION STATUS
@@ -161,8 +161,8 @@ EVEREST | {{ event.event_name }} Reports
                 style="min-width: 3rem !important; min-height: 3rem !important;"
                 src="{% if event.user.profile_pic %}{{ event.user.profile_pic.url }}{% else %}https://icon-library.com/images/generic-user-icon/generic-user-icon-19.jpg{% endif %}" />
             </td>
-            <td>{{ event.user.user.last_name }}</td>
             <td>{{ event.user.user.first_name }}</td>
+            <td>{{ event.user.user.last_name }}</td>
             <td
               class="{% if event.is_registration_approved == 'APPROVED' %}bg-success{% elif transaction.is_registration_approved == 'PENDING' %}bg-primary{% else %}bg-danger{% endif %}"
               style="text-align: center; color: white;">{{ event.is_registration_approved }}</td>
