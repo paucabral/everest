@@ -82,6 +82,7 @@ EVEREST | ADMIN: {{ request.user.username }}
   </div>
   <!-- end transactions cards -->
 
+  <!-- mid -->
   <div class="container-fluid my-2">
     <div class="row">
       <div class="col mb-4" style="height: 40em;">
@@ -133,6 +134,7 @@ EVEREST | ADMIN: {{ request.user.username }}
             {% for event in today %}
             <div class="card-body">
               <h5 class="card-title">{{ event.event_name }}</h5>
+              <span style="font-size: x-small; text-transform: uppercase;">{{ event.date }}</span>
               <p class="card-text">{{ event.short_description }}</p>
               <a href="/administrator/events/event/{{ event.id }}/reports" class="btn btn-info text-white" style="font-weight: bold; background-color: rgba(34, 166, 170, 0.918); border: none;">DETAILS</a>
             </div>
@@ -151,6 +153,7 @@ EVEREST | ADMIN: {{ request.user.username }}
             {% for event in upcoming %}
             <div class="card-body">
               <h5 class="card-title">{{ event.event_name }}</h5>
+              <span style="font-size: x-small; text-transform: uppercase;">{{ event.date }}</span>
               <p class="card-text">{{ event.short_description }}</p>
               <a href="/administrator/events/event/{{ event.id }}/reports" class="btn btn-warning text-white"
                 style="font-weight: bold;">DETAILS</a>
@@ -170,6 +173,7 @@ EVEREST | ADMIN: {{ request.user.username }}
             {% for event in previous %}
             <div class="card-body">
               <h5 class="card-title">{{ event.event_name }}</h5>
+              <span style="font-size: x-small; text-transform: uppercase;">{{ event.date }}</span>
               <p class="card-text">{{ event.short_description }}</p>
               <a href="/administrator/events/event/{{ event.id }}/reports" class="btn btn-secondary text-white"
                 style="font-weight: bold;">DETAILS</a>
@@ -186,6 +190,7 @@ EVEREST | ADMIN: {{ request.user.username }}
 
     </div>
   </div>
+  <!-- end mid -->
 </main>
 
 
