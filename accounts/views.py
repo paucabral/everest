@@ -114,6 +114,51 @@ class AccountProfile(View):
         return redirect("/profile")
 
 
+class AccountProfileAdmin(View):
+    @method_decorator(login_required(login_url='/'))
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        profile = Profile.objects.get(user=user)
+
+        form = ProfileForm(instance=profile)
+
+        return render(request, template_name='accounts/profile-admin.html', context={'form': form})
+
+    @method_decorator(login_required(login_url='/'))
+    def post(self, request, *args, **kwargs):
+        user = request.user
+        user_instance = Profile.objects.get(user=user)
+        account_instance = User.objects.get(id=user.id)
+
+        form = ProfileForm(request.POST, request.FILES, instance=user_instance)
+
+        if form.is_valid():
+            form.save()
+
+            first_name = request.POST["first_name"]
+            last_name = request.POST["last_name"]
+            email = request.POST["email"]
+            username = request.POST["username"]
+
+            account_instance.first_name = first_name
+            account_instance.last_name = last_name
+            account_instance.email = email
+            account_instance.username = username
+
+            account_instance.save()
+
+            messages.add_message(request,
+                                 messages.SUCCESS,
+                                 'Your profile information was saved successfully.')
+
+            return redirect("/administrator/admin-profile")
+
+        else:
+            messages.error(
+                request, 'There was an error saving in your profile information.')
+        return redirect("/profile")
+
+
 class AdminRegisterSuperuser(View):
     @method_decorator(login_required(login_url='/'))
     @method_decorator(admin_only())

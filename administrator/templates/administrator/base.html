@@ -206,11 +206,17 @@
     <div id="sidebar-wrapper">
       <br>
       <center>
-        <img class="profile-img my-auto" alt="{{ request.user.username }}" src="{% if request.user.profile.profile_pic %}{{ request.user.profile.profile_pic.url }}{% else %}{% static 'img/default-profile-icon.jpg' %}{% endif %}" />
+        <a href="/administrator/admin-profile">
+          <img class="profile-img my-auto" alt="{{ request.user.username }}"
+            src="{% if request.user.profile.profile_pic %}{{ request.user.profile.profile_pic.url }}{% else %}{% static 'img/default-profile-icon.jpg' %}{% endif %}" />
+        </a>
         <br>
         <br>
-        <h4 style="color: #ddd; text-transform: uppercase;">{{ request.user.first_name }} {{ request.user.last_name }}</h4>
-        <h6 style="color: #ddd">{{ request.user.username }}</h6><br>
+        <a href="/administrator/admin-profile" style="text-decoration: none;">
+          <h4 style="color: #ddd; text-transform: uppercase;">{{ request.user.first_name }} {{ request.user.last_name }}</h4>
+          <h6 style="color: #ddd">{{ request.user.username }}</h6><br>
+        </a>
+
       </center>
       <hr class="my-3">
     

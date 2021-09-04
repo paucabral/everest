@@ -21,4 +21,6 @@ urlpatterns = [
          name='admin-staff'),
     path('staff/delete/<int:staff_id>',
          views.deleteStaff, name='delete-staff'),
+    path('administrator/admin-profile/',
+         views.AccountProfileAdmin.as_view(), name='admin-profile'),
 ]
