@@ -62,9 +62,6 @@ class AdministratorDashboard(View):
             user_confirmed_attendance = EventRegistration.objects.filter(event=i).exclude(
                 time_of_attendance__isnull=True).count()
             attended.append(user_confirmed_attendance)
-
-        print(events, registered, attended)
-
         return render(request, template_name='administrator/dashboard.html', context={'approved': approved, 'pending': pending, 'rejected': rejected, 'recent': recent, 'today': today, 'upcoming': upcoming, 'previous': previous, 'events': events, 'registered': registered, 'attended': attended})
 
 
