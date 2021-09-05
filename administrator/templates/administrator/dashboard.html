@@ -93,7 +93,7 @@ EVEREST | ADMIN: {{ request.user.username }}
           var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-              labels: "{{ events|safe }}".replace(/[^a-zA-Z ,.-/(/)/']/g, "").split(","),
+              labels: "{{ events|safe }}".replace(/[^a-zA-Z ,.-/(/)/'!]/g, "").split(","),
               datasets: [
                 {
                   label: 'Registered',
