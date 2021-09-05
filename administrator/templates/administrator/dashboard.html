@@ -121,6 +121,16 @@ EVEREST | ADMIN: {{ request.user.username }}
             ]
             },
             options: {
+              plugins: {
+                title: {
+                  display: true,
+                  text: 'LAST 10 EVENTS',
+                  font: {
+                    size: 20,
+                    style: 'bold'
+                  }
+                }
+              },
               scales: {
                 y: {
                   beginAtZero: true
