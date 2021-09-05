@@ -57,6 +57,17 @@ EVEREST | {{ event.event_name }} Reports
         <div class="card-title container-fluid">
           {{ event.detailed_description|safe }}
         </div>
+        
+        <div class="row row-eq-height container-fluid" style="align-items: center; text-align: center;">
+          <div class="col container-fluid form-control" style="border-radius: 0; border-width: 2.5px; margin: 1px;">
+            <h5 style="font-weight: bold;">REGISTERED</h5>
+            <span style="text-transform: uppercase;">{{ registered }}</span>
+          </div>
+          <div class="col container-fluid form-control" style="border-radius: 0; border-width: 2.5px; margin: 1px;">
+            <h5 style="font-weight: bold;">ATTENDED</h5>
+            {{ attended }}
+          </div>
+        </div>
 
         <div class="row row-eq-height container-fluid" style="align-items: center; text-align: center;">
           <div class="col container-fluid form-control" style="border-radius: 0; border-width: 2.5px; margin: 1px;">
@@ -164,7 +175,7 @@ EVEREST | {{ event.event_name }} Reports
             <td>{{ event.user.user.first_name }}</td>
             <td>{{ event.user.user.last_name }}</td>
             <td
-              class="{% if event.is_registration_approved == 'APPROVED' %}bg-success{% elif transaction.is_registration_approved == 'PENDING' %}bg-primary{% else %}bg-danger{% endif %}"
+              class="{% if event.is_registration_approved == 'APPROVED' %}bg-success{% elif event.is_registration_approved == 'PENDING' %}bg-primary{% else %}bg-danger{% endif %}"
               style="text-align: center; color: white;">{{ event.is_registration_approved }}</td>
             <td style="text-transform: uppercase;">
               {% if event.time_of_attendance %}

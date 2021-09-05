@@ -45,7 +45,27 @@ class AdministratorDashboard(View):
         previous = Event.objects.filter(date__gte=datetime.datetime.now() -
                                         timedelta(days=how_many_days)).exclude(date__range=(today_min, today_max))
 
-        return render(request, template_name='administrator/dashboard.html', context={'approved': approved, 'pending': pending, 'rejected': rejected, 'recent': recent, 'today': today, 'upcoming': upcoming, 'previous': previous})
+        event_objs = Event.objects.order_by('-id')[:10]
+
+        events = []
+        registered = []
+        attended = []
+
+        for i in event_objs:
+            events.append(i.event_name)
+
+            user_confirmed_attendance = EventRegistration.objects.filter(
+                event=i).filter(
+                is_registration_approved='APPROVED').count()
+            registered.append(user_confirmed_attendance)
+
+            user_confirmed_attendance = EventRegistration.objects.filter(event=i).exclude(
+                time_of_attendance__isnull=True).count()
+            attended.append(user_confirmed_attendance)
+
+        print(events, registered, attended)
+
+        return render(request, template_name='administrator/dashboard.html', context={'approved': approved, 'pending': pending, 'rejected': rejected, 'recent': recent, 'today': today, 'upcoming': upcoming, 'previous': previous, 'events': events, 'registered': registered, 'attended': attended})
 
 
 class CreateEvent(View):
@@ -219,7 +239,14 @@ class EventReports(View):
             request.GET, queryset=user_registered_events)
         user_registered_events = transactions_filter.qs
 
-        return render(request, template_name='administrator/event-reports.html', context={'transactions_filter': transactions_filter, 'user_registered_events': user_registered_events, 'event': event, 'user_registered_events_approved': user_registered_events_approved, 'user_registered_events_pending': user_registered_events_pending, 'user_registered_events_rejected': user_registered_events_rejected, 'user_confirmed_attendance': user_confirmed_attendance})
+        registered = user_registered_events_approved.filter(event=event).filter(
+            is_registration_approved='APPROVED').count()
+
+        attended = user_registered_events_approved.filter(event=event).filter(
+            is_registration_approved='APPROVED').exclude(
+            time_of_attendance__isnull=True).count()
+
+        return render(request, template_name='administrator/event-reports.html', context={'transactions_filter': transactions_filter, 'user_registered_events': user_registered_events, 'event': event, 'user_registered_events_approved': user_registered_events_approved, 'user_registered_events_pending': user_registered_events_pending, 'user_registered_events_rejected': user_registered_events_rejected, 'user_confirmed_attendance': user_confirmed_attendance, 'registered': registered, 'attended': attended})
 
 
 class MemberProfile(View):

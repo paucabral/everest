@@ -82,6 +82,58 @@ EVEREST | ADMIN: {{ request.user.username }}
   </div>
   <!-- end transactions cards -->
 
+  <!-- chart -->
+  <div class="container-fluid my-2">
+    <div class="row">
+      <div class="card col shadow mb-3" style="border: none;">
+        <script src="{% static 'js/chart.js' %}"></script>
+        <canvas id="myChart" height="400%"></canvas>
+        <script type="text/javascript">
+          var ctx = document.getElementById('myChart').getContext('2d');
+          var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: "{{ events|safe }}".replace(/[^a-zA-Z ,.-/(/)/']/g, "").split(","),
+              datasets: [
+                {
+                  label: 'Registered',
+                  data: "{{ registered|safe }}".replace(/[^0-9,]/g, "").split(","),
+                  backgroundColor: [
+                    '#34495E',
+                  ],
+                },
+                {
+                  label: 'Attended',
+                  data: "{{ attended|safe }}".replace(/[^0-9,]/g, "").split(","),
+                  backgroundColor: [
+                    '#2ECC71',
+                    '#D35400',
+                    '#3498DB',
+                    '#E73C3C',
+                    '#F1C40F',
+                    '#1ABC9C',
+                    '#8E44AD',
+                    '#E67E22',
+                    '#27AE60',
+                    '#D25383'
+                  ],
+                }
+            ]
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true
+                }
+              }
+            }
+          });
+        </script>
+      </div>
+    </div>
+  </div>
+  <!-- end chart -->
+
   <!-- mid -->
   <div class="container-fluid my-2">
     <div class="row">

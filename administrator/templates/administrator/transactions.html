@@ -131,7 +131,7 @@ EVEREST | All Transactions
         <tr>
           <td>{{ transaction.id }}</td>
           <td><a href="/administrator/members/member/{{ transaction.user.user.id }}/profile" class="underline-only-link">{{ transaction.user.user.last_name }}, {{ transaction.user.user.first_name }}</a></td>
-          <td><a class="underline-only-link" href="/member/events/event/{{ transaction.event.id }}">{{ transaction.event.event_name }}</a></td>
+          <td><a class="underline-only-link" href="/administrator/events/event/{{ transaction.event.id }}/reports">{{ transaction.event.event_name }}</a></td>
           <td style="text-transform: uppercase;">{{ transaction.date_created }}</td>
           <td>{{ transaction.event.short_description }}</td>
           <td
