@@ -45,7 +45,7 @@ class AdministratorDashboard(View):
         previous = Event.objects.filter(date__gte=datetime.datetime.now() -
                                         timedelta(days=how_many_days)).exclude(date__range=(today_min, today_max))
 
-        event_objs = Event.objects.order_by('-id')[:10]
+        event_objs = Event.objects.order_by('-date')[:10]
 
         events = []
         registered = []

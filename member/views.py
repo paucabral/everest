@@ -19,6 +19,17 @@ from member.models import Event, EventRegistration
 class MemberDashboard(View):
     @method_decorator(login_required(login_url='/'))
     def get(self, request, *args, **kwargs):
+        user = Profile.objects.get(id=request.user.profile.id)
+        registered_events = EventRegistration.objects.filter(
+            user=user).order_by("-date_created")[:10]
+
+        approved = EventRegistration.objects.filter(user=user).filter(
+            is_registration_approved='APPROVED').count()
+        pending = EventRegistration.objects.filter(user=user).filter(
+            is_registration_approved='PENDING').count()
+        rejected = EventRegistration.objects.filter(user=user).filter(
+            is_registration_approved='REJECTED').count()
+
         banner1 = Banner.objects.filter(
             position="1ST BANNER")
         if not banner1:
@@ -42,7 +53,7 @@ class MemberDashboard(View):
         else:
             banner3 = Banner.objects.filter(
                 position="3RD BANNER").latest('date_added')
-        return render(request, template_name='member/dashboard.html', context={'banner1': banner1, 'banner2': banner2, 'banner3': banner3})
+        return render(request, template_name='member/dashboard.html', context={'banner1': banner1, 'banner2': banner2, 'banner3': banner3, 'registered_events': registered_events, 'approved': approved, 'pending': pending, 'rejected': rejected})
 
 
 class FindEvent(View):

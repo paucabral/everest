@@ -65,21 +65,21 @@ EVEREST | Announcements
                 {% if banner1 %}
                 <img class="announcement-banner d-block w-100" src="{{ banner1.banner_img.url }}" />
                 {% else %}
-                <div class="bg-success d-block w-100" style="height: 20em;">No announcement placed.</div>
+                <div class="bg-success" style="height: 20em; text-align: center; display: flex; justify-content: center; align-items: center;">No announcement placed.</div>
                 {% endif %}
               </div>
               <div class="carousel-item">
                 {% if banner2 %}
                 <img class="announcement-banner d-block w-100" src="{{ banner2.banner_img.url }}" />
                 {% else %}
-                <div class="bg-success d-block w-100" style="height: 20em;">No announcement placed.</div>
+                <div class="bg-primary" style="height: 20em; text-align: center; display: flex; justify-content: center; align-items: center;">No announcement placed.</div>
                 {% endif %}
               </div>
               <div class="carousel-item">
                 {% if banner3 %}
                 <img class="announcement-banner d-block w-100" src="{{ banner3.banner_img.url }}" />
                 {% else %}
-                <div class="bg-success d-block w-100" style="height: 20em;">No announcement placed.</div>
+                <div class="bg-danger" style="height: 20em; text-align: center; display: flex; justify-content: center; align-items: center;">No announcement placed.</div>
                 {% endif %}
               </div>
             </div>
@@ -106,7 +106,7 @@ EVEREST | Announcements
               <div class="form-group row">
                 <div class="col-md" style="margin-top:0.5rem; margin-bottom:0.5rem;">
                   <h5>Add a new announcement banner:</h5>
-                  <p><i><b>Note:</b> This upload form only accepts images. The recommended image aspect ratio is: <b>10.51:4.06</b> (ex. 1051px x 406px image). Otherwise, the image would be cropped from the center. The image preview below is a point of reference.</i></p>
+                  <p><i><b>Note:</b> This upload form only accepts images. The recommended image aspect ratio is: <b>10.51:4.06</b> (ex. 1051px by 406px image). Otherwise, the image would be cropped from the center. The image preview below is a point of reference.</i></p>
                 </div>
               </div>
               <div class="form-group row">
