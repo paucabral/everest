@@ -106,7 +106,7 @@ EVEREST | Announcements
               <div class="form-group row">
                 <div class="col-md" style="margin-top:0.5rem; margin-bottom:0.5rem;">
                   <h5>Add a new announcement banner:</h5>
-                  <p><i><b>Note:</b> This upload form only accepts images. The recommended image aspect ratio is: <b>16:9</b>.</i></p>
+                  <p><i><b>Note:</b> This upload form only accepts images. The recommended image aspect ratio is: <b>10.51:4.06</b> (ex. 1051px x 406px image). Otherwise, the image would be cropped from the center. The image preview below is a point of reference.</i></p>
                 </div>
               </div>
               <div class="form-group row">
@@ -119,9 +119,10 @@ EVEREST | Announcements
               </div>
               <div class="form-group row">
                 <div class="col-md" style="margin-bottom:0.5rem;">
-                  <img id="image" class="my-2" style="width: 100%; object-fit: cover; align-self: center;" />
+                  <img id="image" class="my-2"/>
                   <div id="placeholderdiv"
-                    style="background-color: rgb(219, 225, 226); width: 100%; height: 20em; text-align: center; display: flex; align-items: center; justify-content: center;">
+                    class="announcement-banner"
+                    style="background-color: rgb(219, 225, 226); width: 100%; height: 25.5em; text-align: center; display: flex; align-items: center; justify-content: center;">
                     <h6 style="font-weight: bold;">Attachment Preview</h6>
                   </div>
               
@@ -143,6 +144,7 @@ EVEREST | Announcements
   document.getElementById('id_banner_img').onchange = function () {
     var src = URL.createObjectURL(this.files[0])
     document.getElementById('image').src = src
+    document.getElementById('image').className = "my-2 announcement-banner"
     document.getElementById('placeholderdiv').style.display = "none";
   }
 </script>
