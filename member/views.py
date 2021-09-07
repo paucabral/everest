@@ -19,7 +19,30 @@ from member.models import Event, EventRegistration
 class MemberDashboard(View):
     @method_decorator(login_required(login_url='/'))
     def get(self, request, *args, **kwargs):
-        return render(request, template_name='member/dashboard.html', context={})
+        banner1 = Banner.objects.filter(
+            position="1ST BANNER")
+        if not banner1:
+            banner1 = None
+        else:
+            banner1 = Banner.objects.filter(
+                position="1ST BANNER").latest('date_added')
+
+        banner2 = Banner.objects.filter(
+            position="2ND BANNER")
+        if not banner2:
+            banner2 = None
+        else:
+            banner2 = Banner.objects.filter(
+                position="2ND BANNER").latest('date_added')
+
+        banner3 = Banner.objects.filter(
+            position="3RD BANNER")
+        if not banner3:
+            banner3 = None
+        else:
+            banner3 = Banner.objects.filter(
+                position="3RD BANNER").latest('date_added')
+        return render(request, template_name='member/dashboard.html', context={'banner1': banner1, 'banner2': banner2, 'banner3': banner3})
 
 
 class FindEvent(View):

@@ -49,3 +49,18 @@ class ContactForm(ModelForm):
             {'class': 'form-control', 'required': 'required'})
         self.fields['support_contact'].widget.attrs.update(
             {'class': 'form-control', 'required': 'required'})
+
+
+class BannerForm(ModelForm):
+    class Meta:
+        model = Banner
+        fields = '__all__'
+        exclude = ['date_added']
+
+    def __init__(self, *args, **kwargs):
+        super(BannerForm, self).__init__(*args, **kwargs)
+
+        self.fields['position'].widget.attrs.update(
+            {'class': 'form-control', 'required': 'required'})
+        self.fields['banner_img'].widget.attrs.update(
+            {'class': 'form-control', 'required': 'required'})

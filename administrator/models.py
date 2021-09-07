@@ -45,3 +45,16 @@ class SupportContact(models.Model):
 
     def __str__(self):
         return self.support_contact
+
+
+class Banner(models.Model):
+    POSITION = (
+        ('1ST BANNER', '1ST BANNER'),
+        ('2ND BANNER', '2ND BANNER'),
+        ('3RD BANNER', '3RD BANNER'),
+    )
+
+    position = models.CharField(
+        max_length=200, null=True, choices=POSITION)
+    banner_img = models.ImageField(null=True)
+    date_added = models.DateTimeField(auto_now_add=True, null=True)

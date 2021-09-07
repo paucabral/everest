@@ -26,4 +26,6 @@ urlpatterns = [
          name='list-members'),
     path('support-contact/delete/<int:contact_id>',
          views.deleteContact, name='delete-contact'),
+    path('announcements', views.Announcement.as_view(),
+         name='announcement'),
 ]

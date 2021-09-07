@@ -291,6 +291,15 @@ img {
   border-radius: 20px !important;
 }
 
+.announcement-banner {
+  max-height: 25.5em !important;
+  width: 100% !important;
+  min-width: 5rem !important;
+  min-height: 5rem !important;
+  object-fit: cover;
+  align-self: center;
+}
+
 /* Fallback for Edge
             -------------------------------------------------- */
 
