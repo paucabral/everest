@@ -24,7 +24,7 @@ EVEREST | Events Joined
 }
 </style>
 
-<main class="container-fluid mx-2">
+<main class="container-fluid">
 
   <form method="GET" class="form-control container-fluid mb-3 p-3" style="border: none;">
     <div class="container-fluid row" style="align-items: center; text-align: center;">
@@ -63,7 +63,7 @@ EVEREST | Events Joined
       
       <div class="col container-fluid col-md-4 my-2">
         <div
-          class="shadow mb-5 card card-item-event {% if event.event.event_type == 'CONFERENCE' %}card-header-conference{% elif event.event.event_type == 'SEMINAR' %}card-header-seminar{% else %}card-header-workshop{% endif %}"
+          class="shadow mb-5 h-100 card card-item-event {% if event.event.event_type == 'CONFERENCE' %}card-header-conference{% elif event.event.event_type == 'SEMINAR' %}card-header-seminar{% else %}card-header-workshop{% endif %}"
           style="align-items: center; text-align: center; border: none;">
           <h3 class="card-header brand text-white" style="text-transform: uppercase;">{{ event.event.event_name }}</h3>
           <div class="card-body" style="background-color: aliceblue; width: 100%;">
