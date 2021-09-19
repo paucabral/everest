@@ -29,7 +29,7 @@ class AdministratorDashboard(View):
             is_registration_approved='PENDING').count()
         rejected = EventRegistration.objects.filter(
             is_registration_approved='REJECTED').count()
-        recent = EventRegistration.objects.order_by('-date_created')[:10]
+        recent = EventRegistration.objects.order_by('-date_created')[:20]
 
         today_min = datetime.datetime.combine(
             datetime.date.today(), datetime.time.min)
