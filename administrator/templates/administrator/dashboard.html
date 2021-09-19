@@ -93,30 +93,33 @@ EVEREST | ADMIN: {{ request.user.username }}
           var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-              labels: "{{ events|safe }}".replace(/[^a-zA-Z ,.-/(/)/'!]/g, "").split(","),
+              // labels: "{{ events|safe }}".replace(/[^a-zA-Z ,.-/(/)/'!]/g, "").split(","),
+              labels: [{% for event in events %} '{{ event }}', {% endfor %}],
               datasets: [
                 {
                   label: 'Registered',
-                  data: "{{ registered|safe }}".replace(/[^0-9,]/g, "").split(","),
-                  backgroundColor: [
-                    '#34495E',
-                  ],
+                  // data: "{{ registered|safe }}".replace(/[^0-9,]/g, "").split(","),
+                  data: [{% for register in registered %} '{{ register }}', {% endfor %}],
+                backgroundColor: [
+                  '#34495E',
+                ],
                 },
-                {
-                  label: 'Attended',
-                  data: "{{ attended|safe }}".replace(/[^0-9,]/g, "").split(","),
-                  backgroundColor: [
-                    '#2ECC71',
-                    '#D35400',
-                    '#3498DB',
-                    '#E73C3C',
-                    '#F1C40F',
-                    '#1ABC9C',
-                    '#8E44AD',
-                    '#E67E22',
-                    '#27AE60',
-                    '#D25383'
-                  ],
+              {
+                label: 'Attended',
+                  // data: "{{ attended|safe }}".replace(/[^0-9,]/g, "").split(","),
+                  data: [{% for attend in attended %} '{{ attend }}', {% endfor %}],
+              backgroundColor: [
+                '#2ECC71',
+                '#D35400',
+                '#3498DB',
+                '#E73C3C',
+                '#F1C40F',
+                '#1ABC9C',
+                '#8E44AD',
+                '#E67E22',
+                '#27AE60',
+                '#D25383'
+              ],
                 }
             ]
             },

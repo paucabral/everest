@@ -16,7 +16,7 @@ class EventForm(ModelForm):
         super(EventForm, self).__init__(*args, **kwargs)
 
         self.fields['event_name'].widget.attrs.update(
-            {'class': 'form-control', 'required': 'required', 'autofocus': 'autofocus', "pattern": "[A-Za-z0-9 \)\('.!]+"})
+            {'class': 'form-control', 'required': 'required', 'autofocus': 'autofocus'})
         self.fields['short_description'].widget.attrs.update(
             {'class': 'form-control', })
         self.fields['location'].widget.attrs.update(

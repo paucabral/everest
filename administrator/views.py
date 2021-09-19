@@ -39,11 +39,11 @@ class AdministratorDashboard(View):
             date__range=(today_min, today_max))
 
         this_day = datetime.datetime.today()
-        upcoming = Event.objects.filter(date__gte=this_day)
+        upcoming = Event.objects.filter(
+            date__gte=this_day).order_by('date')
 
-        how_many_days = 15
-        previous = Event.objects.filter(date__gte=datetime.datetime.now() -
-                                        timedelta(days=how_many_days)).exclude(date__range=(today_min, today_max))
+        previous = Event.objects.filter(date__lte=this_day).exclude(
+            date__range=(today_min, today_max)).order_by('-date')[:5]
 
         event_objs = Event.objects.order_by('-date')[:10]
 
