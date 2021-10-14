@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django_filters',
     'cloudinary_storage',
     'cloudinary',
+    "django_createsuperuserwithpassword",
     'accounts',
     'administrator',
     'member',
