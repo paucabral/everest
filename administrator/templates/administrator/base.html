@@ -186,10 +186,12 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link menuItem" href="/admin">
-                <i class="fa fa-user fa-3" aria-hidden="true"></i>
-                Full Admin Panel
-              </a>
+              <form onsubmit="return confirm('WARNING: This will redirect you to the full Django Administrator Panel. This will grant you direct access to the database and its content. Would you like to proceed?')" methd="GET" action="/admin">
+                <button type="submit" class="btn nav-link menuItem">
+                  <i class="fa fa-user fa-3" aria-hidden="true"></i>
+                  Full Admin Panel
+                </button>
+              </form>
             </li>
             <li class="nav-item">
               <a class="nav-link menuItem" href="/logout">
