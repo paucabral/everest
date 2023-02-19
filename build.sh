@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# exit on error
+set -o errexit
+
+pip3 install -r requirements.txt
+
+python3 manage.py collectstatic --no-input
+python3 manage.py migrate
+
+python manage.py createsuperuserwithpassword --username adminusername --password adminpassword --email adminemail@example.org --preserve
